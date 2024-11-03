@@ -1,34 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   reverse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 14:55:43 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/02 14:55:43 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/02 11:54:34 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/02 11:54:34 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef PUSH_SWAP_H
-#define PUSH_SWAP_H
-
-# include "libft.h"
-# include "ft_printf.h"
-# include "get_next_line.h"
-
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stddef.h>
-# include <limits.h>
-
-typedef struct s_stack
-{
-	int	value;
-	int index;
-	struct s_stack *next;
-} t_stack;
-
-
-#endif
+#include "push_swap.h"
