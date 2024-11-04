@@ -13,47 +13,74 @@
 #include "../includes/push_swap.h"
 
 //https://medium.com/@ayogun/push-swap-c1f5d2d41e97
-//keeping
-static int is_number(const char *str)
-{
-	if (*str == '-' || *str == '+')
-		str++;
-	while (*str)
-	{
-		if (*str < '0' || *str > '9')
-			return (0); // Not a valid digit
-		str++;
-	}
-	return (1);
+void print_list(t_stack *head) {
+    while (head) {
+        ft_printf("%d ", head->value);
+        head = head->next;
+    }
+    ft_printf("\n");
 }
 
-//keeping
-static int check_duplicate(t_stack *stack, int value)
+void free_list(t_stack *head) {
+    t_stack *temp;
+    while (head) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
+
+t_stack *create_node(int value) {
+    t_stack *new_node = (t_stack *)malloc(sizeof(t_stack));
+    if (!new_node)
+        exit(EXIT_FAILURE); //handle malloc failure ?
+    new_node->value = value;
+    new_node->next = NULL;
+    return (new_node);
+}
+
+void append_node(t_stack **head, int value)
 {
-	while (stack)
+	t_stack *new_node = create_node(value);
+	if(!*head)
+		*head = new_node;
+	else
 	{
-		if (stack->value == value)
-			return (1); // Duplicate found
-		stack = stack->next;
+		t_stack *temp = *head;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new_node;
 	}
+}
+
+
+int	parse_and_append(t_stack **stack, char *str)
+{
+	long num = ft_atoi(str);
+	if(num < INT_MIN || num > INT_MAX)
+		return (-1);
+	append_node(stack, (int)num);
 	return (0);
 }
 
-//keeping
-void print_stack(t_stack *stack)
-{
-	while (stack)
-	{
-		ft_putnbr_fd(stack->value, 1);
-		ft_putchar_fd(' ', 1);
-		stack = stack->next;
-	}
-	ft_putchar_fd('\n', 1);
-}
 
 int main(int argc, char **argv)
 {
+	t_stack *stack_a;
+	int	i;
+
+	stack_a = NULL; //add pointer ?
+	i = 1;
 	if (argc < 2)
 		return (0); //Error message ?
-	ft_printf("Your Makefile Works\n");
+	while (i < argc)
+	{
+		if (parse_and_append(&stack_a, argv[i]) == -1)
+		{
+			ft_putendl_fd("Error", 2);
+			exit(EXIT_FAILURE); //is this a correct error message ?
+		}
+	}
+
+	//further processing needed
 }

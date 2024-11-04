@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = push_swap
-SRCS = main.c push.c swap.c rotate.c reverse.c sort.c #to change
+SRCS = main.c push.c swap.c rotate.c reverse.c #to change
 
 CC = gcc
 CCFLAG = -Wall -Werror -Wextra
