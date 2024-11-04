@@ -6,13 +6,13 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:54:21 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/04 11:30:42 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:04:42 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	push(t_stack **src, t_stack **dest)
+void	push(t_stack **src, t_stack **dest)
 {
 	t_stack	*temp;
 
@@ -40,7 +40,7 @@ void	pb(t_stack **stack_b, t_stack **stack_a)
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
-void	ft_putendl_fd(char *s, int fd)
+/* void	ft_putendl_fd(char *s, int fd)
 {
 	if (s)
 	{
@@ -125,4 +125,4 @@ int	main(void)
 {
 	test_push();
 	return (0);
-}
+} */

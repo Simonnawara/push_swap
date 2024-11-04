@@ -6,12 +6,12 @@
 #    By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/02 12:06:45 by sinawara          #+#    #+#              #
-#    Updated: 2024/11/02 12:06:45 by sinawara         ###   ########.fr        #
+#    Updated: 2024/11/04 13:03:48 by sinawara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
-SRCS = main.c test_win.c #to change
+SRCS = main.c push.c swap.c rotate.c reverse.c sort.c #to change
 
 CC = gcc
 CCFLAG = -Wall -Werror -Wextra

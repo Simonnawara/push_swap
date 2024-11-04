@@ -6,13 +6,13 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:54:39 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/02 11:54:39 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:07:17 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	swap(t_stack *stack)
+void	swap(t_stack *stack)
 {
 	int	temp;
 
@@ -48,7 +48,7 @@ void	ss(t_stack **stack_a, t_stack **stack_b)
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
-void	print_stack(t_stack *stack, char *name)
+/* void	print_stack(t_stack *stack, char *name)
 {
 	printf("Stack %s: ", name);
 	while (stack)
@@ -155,4 +155,4 @@ int	main(void)
 {
 	test_swap();
 	return (0);
-}
+} */

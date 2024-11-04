@@ -6,13 +6,13 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 11:54:37 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/04 11:33:36 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:05:59 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	rotate(t_stack **stack)
+void	rotate(t_stack **stack)
 {
 	t_stack	*first;
 	t_stack	*temp;
@@ -53,7 +53,7 @@ void	rr(t_stack **stack_a, t_stack **stack_b)
 /////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
-void	ft_putendl_fd(char *s, int fd)
+/* void	ft_putendl_fd(char *s, int fd)
 {
 	if (s)
 	{
@@ -150,4 +150,4 @@ int	main(void)
 {
 	test_rotate();
 	return (0);
-}
+} */
