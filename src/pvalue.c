@@ -6,7 +6,7 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 23:01:28 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/04 23:01:28 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:47:06 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,28 @@ int	max_lst(t_stack *stack_b)
 		stack_b = stack_b->next;
 	}
 	return (max);
+}
+
+int	find_index(int value, t_stack *stack_b) //hasn't been tested yet
+{
+	int	max;
+	int	index;
+	int	current_index;
+	
+	max = value;
+	index = -1;
+	current_index = 0;
+	while (stack_b)
+	{
+		if (stack_b->value < value && stack_b->value > max)
+		{
+			max = stack_b->value;
+			index = current_index;
+		}
+		stack_b = stack_b->next;
+		current_index++;
+	}
+	return (index);
 }
 
 t_stack *get_last_node(t_stack *stack)
