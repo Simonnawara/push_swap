@@ -13,30 +13,61 @@
 #include "../includes/push_swap.h"
 
 //https://medium.com/@ayogun/push-swap-c1f5d2d41e97
-void print_list(t_stack *head) {
-    while (head) {
-        ft_printf("%d ", head->value);
-        head = head->next;
-    }
-    ft_printf("\n");
+
+/* static int check_duplicate(t_stack *stack, int value)
+{
+	while (stack)
+	{
+		if (stack->value == value)
+			return (1); // Duplicate found
+		stack = stack->next;
+	}
+	return (0);
+} */
+
+static int is_number(const char *str)
+{
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0); // Not a valid digit
+		str++;
+	}
+	return (1);
 }
 
-void free_list(t_stack *head) {
-    t_stack *temp;
-    while (head) {
-        temp = head;
-        head = head->next;
-        free(temp);
-    }
+void print_list(t_stack *head)
+{
+	while (head) {
+		ft_printf("%d ", head->value);
+		head = head->next;
+	}
+	ft_printf("\n");
 }
 
-t_stack *create_node(int value) {
-    t_stack *new_node = (t_stack *)malloc(sizeof(t_stack));
-    if (!new_node)
-        exit(EXIT_FAILURE); //handle malloc failure ?
-    new_node->value = value;
-    new_node->next = NULL;
-    return (new_node);
+void free_list(t_stack *head)
+{
+	t_stack *temp;
+	while (head) {
+		temp = head;
+		head = head->next;
+		free(temp);
+	}
+}
+////////////////////////////////////////////////////////////////////////
+////////////////////Create and fill linked list/////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+t_stack *create_node(int value)
+{
+	t_stack *new_node = (t_stack *)malloc(sizeof(t_stack));
+	if (!new_node)
+		exit(EXIT_FAILURE); //handle malloc failure ?
+	new_node->value = value;
+	new_node->next = NULL;
+	return (new_node);
 }
 
 void append_node(t_stack **head, int value)
@@ -53,34 +84,40 @@ void append_node(t_stack **head, int value)
 	}
 }
 
-
 int	parse_and_append(t_stack **stack, char *str)
 {
 	long num = ft_atoi(str);
-	if(num < INT_MIN || num > INT_MAX)
+	if (num < INT_MIN || num > INT_MAX)
 		return (-1);
 	append_node(stack, (int)num);
 	return (0);
 }
 
-
 int main(int argc, char **argv)
 {
-	t_stack *stack_a;
-	int	i;
+	t_stack	*stack_a;
+	int		i;
 
-	stack_a = NULL; //add pointer ?
+	stack_a = NULL;
 	i = 1;
 	if (argc < 2)
-		return (0); //Error message ?
+	{
+		ft_putendl_fd("Error: No arguments provided", 2);
+		return (0);
+	}
 	while (i < argc)
 	{
-		if (parse_and_append(&stack_a, argv[i]) == -1)
+		if (!is_number(argv[i]) ||
+			(parse_and_append(&stack_a, argv[i]) == -1))
 		{
 			ft_putendl_fd("Error", 2);
-			exit(EXIT_FAILURE); //is this a correct error message ?
+			free_list(stack_a);
+			exit(EXIT_FAILURE);
 		}
+		i++;
 	}
-
-	//further processing needed
+	ft_putendl_fd("Stack contents:", 1);
+	print_list(stack_a);
+	free_list(stack_a);
+	return (0);
 }
