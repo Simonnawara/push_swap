@@ -6,7 +6,7 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 23:01:28 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/07 17:18:22 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:45:55 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,44 @@ t_stack *get_last_node(t_stack *stack)
     return stack;
 }
 
+
+
+
 int push_value(t_stack *stack_a, t_stack *stack_b)
+{
+	int index;
+	int sb_size;
+	
+	index = find_index(stack_a->value, stack_b);
+	sb_size = get_stack_size(stack_b);
+	
+	if (index <= ((sb_size / 2) + 1))
+	{
+		//on fait un ra
+	}
+
+	else
+	{
+		//on fait un rr
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int push_value2(t_stack *stack_a, t_stack *stack_b)
 {
 	//this function will have to be called with stack_b with 2 values from stack_a.
 	//function only gets called if stack_b has 2 values min
