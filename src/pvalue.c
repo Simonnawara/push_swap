@@ -6,7 +6,7 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 23:01:28 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/05 11:47:06 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:18:22 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,25 @@ int	max_lst(t_stack *stack_b)
 	return (max);
 }
 
+//pour calculer le type de rotation necessaire (normal vs reverse)
+int get_stack_size(t_stack *stack)
+{
+	int size;
+	
+	size = 0;
+	while (stack)
+	{
+		size++;
+		stack = stack->next;
+	}
+	return (size);
+}
+
+//gets the index of the value right under the one we give in parameter inside of a stack
+//needs to be changed is value is the actual min, it means that value would be the new mi value in stack_b
+// actually : before calling the function, add a protection saying : 
+// if(value < min_lst(stack_b)) //this means that if would be the new minimun value if pushed to stack_b
+// 		do something (maybe push ?)
 int	find_index(int value, t_stack *stack_b) //hasn't been tested yet
 {
 	int	max;
@@ -105,11 +124,14 @@ int push_value(t_stack *stack_a, t_stack *stack_b)
 	{
 		min = min_lst(stack_b);
 		max = max_lst(stack_b);
-		//actually follow the algorithm described in :
+		// actually follow the algorithm described in :
 		// https://medium.com/@ayogun/push-swap-c1f5d2d41e97
 		if ((stack_a->value < min) &&
 			(stack_b->value == min || (last_b && last_b->value == min)))
 			pa(&stack_a, &stack_b); //this counts as a 1 for push expense, which automatically makes it the cheapest one, so the first one to use.
+		//if ()
+		// ...
+		
 		stack_a = stack_a->next;
 		i++;
 	}
