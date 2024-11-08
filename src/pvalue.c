@@ -6,7 +6,7 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 23:01:28 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/08 12:09:31 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/08 15:25:20 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_stack *get_last_node(t_stack *stack)
 }
 
 //gets the type of rotation needed depending on the index of a value within the stack
-int get_rot(int index, t_stack *stack_b)
+int get_rot_type(int index, t_stack *stack_b)
 {
 	int sb_size;
 	int fwd_rotation;
@@ -148,13 +148,42 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 		if (rotation < min_rot)
 		{
 			min_rot = rotation;
-			*rotation_type = get_rot(index, stack_b);
+			*rotation_type = get_rot_type(index, stack_b);
 		}
 		stack_a = stack_a->next;
 	}
 	return (min_rot);
 }
 
+int get_rot_a(t_stack *stack_a, t_stack *stack_b)
+{
+	// get the min_rot from min_rot_amount, which gives us the amout of rotation needed for the value to go
+	// on top of stack_b
+	// 
+	// get the rotation type from get_rot_type(), which tells us the way we do the rotation.
+	//
+	// With these values, we can determine the value of stack b that is going to end up on the top of stack_b.
+	// With the value stocked, we can then determine the value that we are looking for in stack_a. And then determine it's position
+	// and the operations needed for it.
+
+	int min_rot_b;
+	int rot_type_b;
+
+	if (rot_type_b == 0)
+	{
+		//normal rotation
+	}
+	else if (rot_type_b == 1)
+	{
+		//reverse rotation
+	}
+	else if (rot_type_b == 2)
+	{
+		//choose rotation	
+	}
+
+	min_rot_b = min_rot_amount(stack_a, stack_b, &min_rot_b);
+}
 
 
 
