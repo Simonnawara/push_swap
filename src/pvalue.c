@@ -101,23 +101,54 @@ t_stack *get_last_node(t_stack *stack)
 
 
 
-int push_value(t_stack *stack_a, t_stack *stack_b)
+int min_rot_amount(t_stack *stack_a, t_stack *stack_b)
 {
 	int index;
 	int sb_size;
+	int rotation;
+	int min_rot;
 	
-	index = find_index(stack_a->value, stack_b);
-	sb_size = get_stack_size(stack_b);
-	
-	if (index <= ((sb_size / 2) + 1))
-	{
-		//on fait un ra
-	}
+	rotation = 0;
+	min_rot = get_stack_size(stack_b); //c'est pas possible que le nombre de rotation soit plus grand que la taille du stack elle même
 
-	else
+	while(stack_a)
 	{
-		//on fait un rr
+		index = find_index(stack_a->value, stack_b);
+		sb_size = get_stack_size(stack_b);
+		rotation = 0;
+		if (index <= ((sb_size / 2) + 1))
+			rotation += index;
+		else
+			rotation += ((sb_size + 1) - index);
+		if (rotation < min_rot)
+			min_rot = rotation;
+		stack_a = stack_a->next;
 	}
+	return (min_rot);
+}
+
+
+int get_rot(t_stack *stack_b)
+{
+	int index;
+	int sb_size;
+	int fwd_rotation;
+	int rev_rotation;
+	t_stack *stack_a; //to change with the actual stack_a created from the inputs
+	
+	fwd_rotation = 0;
+	rev_rotation = 0;
+
+	index = min_rot_amount(stack_a, stack_b);
+	sb_size = get_stack_size(stack_b);
+	if (index <= ((sb_size / 2) + 1))	//on fait un rb
+		fwd_rotation += index;
+	else	//on fait un rrb
+		rev_rotation += ((sb_size + 1) - index);
+	if (fwd_rotation <= rev_rotation) //maybe add qn option for fwd = rev, and adapts to the type or rotation that should happen on stack a.
+		return (0); // 0 for normal rotations
+	else
+		return (1); // 1 for reverse rotations
 }
 
 
