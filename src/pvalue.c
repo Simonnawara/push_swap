@@ -6,7 +6,7 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 23:01:28 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/07 17:45:55 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/08 12:09:31 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +98,42 @@ t_stack *get_last_node(t_stack *stack)
     return stack;
 }
 
+//gets the type of rotation needed depending on the index of a value within the stack
+int get_rot(int index, t_stack *stack_b)
+{
+	int sb_size;
+	int fwd_rotation;
+	int rev_rotation;
+	
+	fwd_rotation = 0;
+	rev_rotation = 0;
+	sb_size = get_stack_size(stack_b);
+	
+	if (index <= (sb_size / 2))	//on fait un rb //index <= ((sb_size / 2) + 1) ??? Idk if I add +1 or not :/
+	{	
+		fwd_rotation = index;
+		rev_rotation = ((sb_size + 1) - index);
+		
+		if (fwd_rotation == rev_rotation)
+			return (2);
+		else if (fwd_rotation < rev_rotation)
+			return (0);
+		else
+			return (1);
+	}
+	return (-1); //Error
+}
 
-
-
-int min_rot_amount(t_stack *stack_a, t_stack *stack_b)
+// gets the min amout of rotation to bring a certain value to the top of stack depending
+// on the value of stack a
+// it returns the "cheapest" value to push in stack_b for a variable from stack_a
+int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 {
 	int index;
 	int sb_size;
 	int rotation;
 	int min_rot;
 	
-	rotation = 0;
 	min_rot = get_stack_size(stack_b); //c'est pas possible que le nombre de rotation soit plus grand que la taille du stack elle même
 
 	while(stack_a)
@@ -117,39 +142,20 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b)
 		sb_size = get_stack_size(stack_b);
 		rotation = 0;
 		if (index <= ((sb_size / 2) + 1))
-			rotation += index;
+			rotation += index; //normal rotation
 		else
-			rotation += ((sb_size + 1) - index);
+			rotation += ((sb_size + 1) - index); //reverse rotation
 		if (rotation < min_rot)
+		{
 			min_rot = rotation;
+			*rotation_type = get_rot(index, stack_b);
+		}
 		stack_a = stack_a->next;
 	}
 	return (min_rot);
 }
 
 
-int get_rot(t_stack *stack_b)
-{
-	int index;
-	int sb_size;
-	int fwd_rotation;
-	int rev_rotation;
-	t_stack *stack_a; //to change with the actual stack_a created from the inputs
-	
-	fwd_rotation = 0;
-	rev_rotation = 0;
-
-	index = min_rot_amount(stack_a, stack_b);
-	sb_size = get_stack_size(stack_b);
-	if (index <= ((sb_size / 2) + 1))	//on fait un rb
-		fwd_rotation += index;
-	else	//on fait un rrb
-		rev_rotation += ((sb_size + 1) - index);
-	if (fwd_rotation <= rev_rotation) //maybe add qn option for fwd = rev, and adapts to the type or rotation that should happen on stack a.
-		return (0); // 0 for normal rotations
-	else
-		return (1); // 1 for reverse rotations
-}
 
 
 
