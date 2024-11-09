@@ -63,13 +63,12 @@ int get_stack_size(t_stack *stack)
 }
 
 //gets the index of the value right under the one we give in parameter inside of a stack
-//needs to be changed is value is the actual min, it means that value would be the new mi value in stack_b
 // actually : before calling the function, add a protection saying :
 // if(value < min_lst(stack_b)) //this means that if would be the new minimun value if pushed to stack_b
 // 		do something (maybe push ?)
 
 //hasn't been tested yet
-int	find_index(int value, t_stack *stack_b)
+int	find_index_down(int value, t_stack *stack_b)
 {
 	int	max;
 	int	index;
@@ -144,7 +143,7 @@ int get_rot_type(int index, t_stack *stack_b)
 		fwd_rotation = index;
 		rev_rotation = ((sb_size + 1) - index);
 
-		else if (fwd_rotation <= rev_rotation)
+		if (fwd_rotation <= rev_rotation)
 			return (0);
 		else
 			return (1);
@@ -181,7 +180,7 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 
 	while(stack_a)
 	{
-		index = find_index(stack_a->value, stack_b);
+		index = find_index_down(stack_a->value, stack_b);
 		sb_size = get_stack_size(stack_b);
 		rotation = 0;
 		if (index <= ((sb_size / 2) + 1))
@@ -201,63 +200,97 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 int get_rot_a(t_stack *stack_a, t_stack *stack_b)
 {
 	int i;
+	int j;
 	int min_rot_b;
 	int min_rot_a;
 	int rot_type_b;
 	int rot_type_a;
 	int tos; //top of stack
 	int stack_a_value;
-	int commun_rot;
+	int common_rot;
 	int dif_rot;
 
-	i = 0;
 	min_rot_b = min_rot_amount(stack_a, stack_b, &rot_type_b);
-	if (rot_type_b == 0)
-	{
-		while (i++ < min_rot_b)
-			rb(stack_b);	//normal rotation
-	}
-	else if (rot_type_b == 1)
-	{
-		while (i++ < min_rot_b)
-			rrb(stack_b);	//reverse rotation
-	}
-	//////////////  stack_b is sorted correctly from this point on   //////////////////
-
-	tos = stack_b->value;
+	tos = max_lst(stack_b);
 	stack_a_value = find_index_up(tos, stack_a); //now we have the index of the value we want to bring up to the top of stack_a
 	min_rot_a = min_rot_amount_a(stack_a_value, stack_a, rot_type_a); //gives us the amount of rotation needed to get the value on top of stack_a, and the rot type.
 
-if (rot_type_a == 0 && rot_type_b == 0)
-{
-	if (min_rot_b <= min_rot_a)
+	i = 0;
+	j = 0;
+	if (rot_type_a == rot_type_b)
 	{
-		commun_rot = min_rot_b;
-		dif_rot = (min_rot_a - min_rot_b);
+		if (rot_type_a == 0 && rot_type_b == 0)
+		{
+			if (min_rot_b <= min_rot_a)
+			{
+				common_rot = min_rot_b; //number to represent the amout of rotations needed
+				dif_rot = (min_rot_a - min_rot_b);
+				while (i++ < common_rot)
+					rr(stack_a, stack_b); //normal rotation for both stacks
+				while (j++ < dif_rot)
+					ra(stack_a);
+			}
+			else if (min_rot_a < min_rot_b)
+			{
+				common_rot = min_rot_a;
+				dif_rot = (min_rot_b - min_rot_a);
+				while (i++ < common_rot)
+					rr(stack_a, stack_b);	//normal rotation for both stacks
+				while (j++ < dif_rot)
+					rb(stack_b);
+			}
+		}
+
+		else if (rot_type_a == 1 && rot_type_b == 1)
+		{
+			if (min_rot_b <= min_rot_a)
+			{
+				common_rot = min_rot_b; //number to represent the amout of rotations needed
+				dif_rot = (min_rot_a - min_rot_b);
+				while (i++ < common_rot)
+					rrr(stack_a, stack_b); //reverse rotation for both stacks
+				while (j++ < dif_rot)
+					rra(stack_a);
+			}
+			else if (min_rot_a < min_rot_b)
+			{
+				common_rot = min_rot_a;
+				dif_rot = (min_rot_b - min_rot_a);
+				while (i++ < common_rot)
+					rrr(stack_a, stack_b);	//reverse rotation for both stacks
+				while (j++ < dif_rot)
+					rrb(stack_b);
+			}
+		}
 	}
-	else if (min_rot_a < min_rot_b)
+
+	else
 	{
-		commun_rot = min_rot_a;
-		dif_rot = (min_rot_b - min_rot_a);
+		if (rot_type_b == 0)
+		{
+			while(i++ < min_rot_b)
+				rb(stack_b);
+		}
+		else if (rot_type_b == 1)
+		{
+			while(i++ < min_rot_b)
+				rrb(stack_b);
+		}
+
+		i = 0;
+		if (rot_type_a == 0)
+		{
+			while(i++ < min_rot_a)
+				ra(stack_a);
+		}
+		else if (rot_type_a == 1)
+		{
+			while(i++ < min_rot_a)
+				rra(stack_a);
+		}
 	}
-}
 
-else if (rot_type_a == 1 && rot_type_b == 1)
-{
-	if (min_rot_b <= min_rot_a)
-	{
-		commun_rot = min_rot_b;
-		dif_rot = (min_rot_a - min_rot_b);
-	}
-	else if (min_rot_a < min_rot_b)
-	{
-		commun_rot = min_rot_a;
-		dif_rot = (min_rot_b - min_rot_a);
-	}
-}
-
-
-
+	pa(stack_a, stack_b);
 }
 
 
