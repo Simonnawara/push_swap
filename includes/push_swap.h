@@ -68,6 +68,11 @@ int get_stack_size(t_stack *stack);
 t_stack *get_last_node(t_stack *stack);
 
 // pvalue //
-void get_rot_a(t_stack *stack_a, t_stack *stack_b);
+int get_rot_a(t_stack **stack_a, t_stack **stack_b);
 
+// first_steps //
+int check_and_push(t_stack **stack_a);
+
+// main //
+void print_list(t_stack *head);
 #endif

@@ -20,7 +20,7 @@
 // 4. Push stack_A value to stack_B value
 // 5. Repeat until 3 values are left on stack_A
 
-void get_rot_a(t_stack *stack_a, t_stack *stack_b)
+int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from single pointer to double pointer
 {
 	int i;
 	int j;
@@ -33,86 +33,106 @@ void get_rot_a(t_stack *stack_a, t_stack *stack_b)
 	int common_rot;
 	int dif_rot;
 
-	min_rot_b = min_rot_amount(stack_a, stack_b, &rot_type_b);
-	tos = max_lst(stack_b);
-	stack_a_value = find_index_up(tos, stack_a); //now we have the index of the value we want to bring up to the top of stack_a
-	min_rot_a = min_rot_amount_a(stack_a_value, stack_a, &rot_type_a); //gives us the amount of rotation needed to get the value on top of stack_a, and the rot type.
+
+	printf("print stack_b : ");
+	print_list(*stack_b);
+	min_rot_b = min_rot_amount(*stack_a, *stack_b, &rot_type_b);
+		printf("min_rot_b : %d\n", min_rot_b);
+
+	tos = max_lst(*stack_b); //stack_n is empty, so it's trying to go through an empty list
+		printf("tos (max number in stack b) : %d\n", tos);
+
+	stack_a_value = find_index_up(tos, *stack_a); //now we have the index of the value we want to bring up to the top of stack_a
+		printf("stack_a_value : %d\n", stack_a_value);
+
+	min_rot_a = min_rot_amount_a(stack_a_value, *stack_a, &rot_type_a); //gives us the amount of rotation needed to get the value on top of stack_a, and the rot type.
+		printf("min_rot_a : %d\n", min_rot_a);
 
 	i = 0;
 	j = 0;
+	printf("1\n");
 	if (rot_type_a == rot_type_b)
 	{
 		if (rot_type_a == 0 && rot_type_b == 0)
 		{
+	printf("1\n");
 			if (min_rot_b <= min_rot_a)
 			{
+	printf("1\n");
 				common_rot = min_rot_b; //number to represent the amout of rotations needed
 				dif_rot = (min_rot_a - min_rot_b);
 				while (i++ < common_rot)
-					rr(&stack_a, &stack_b); //normal rotation for both stacks
+					rr(stack_a, stack_b); //normal rotation for both stacks
 				while (j++ < dif_rot)
-					ra(&stack_a);
+					ra(stack_a);
 			}
 			else if (min_rot_a < min_rot_b)
 			{
+	printf("1\n");
 				common_rot = min_rot_a;
 				dif_rot = (min_rot_b - min_rot_a);
 				while (i++ < common_rot)
-					rr(&stack_a, &stack_b);	//normal rotation for both stacks
+					rr(stack_a, stack_b);	//normal rotation for both stacks
 				while (j++ < dif_rot)
-					rb(&stack_b);
+					rb(stack_b);
 			}
 		}
 
 		else if (rot_type_a == 1 && rot_type_b == 1)
 		{
+	printf("1\n");
 			if (min_rot_b <= min_rot_a)
 			{
+	printf("1\n");
 				common_rot = min_rot_b; //number to represent the amout of rotations needed
 				dif_rot = (min_rot_a - min_rot_b);
 				while (i++ < common_rot)
-					rrr(&stack_a, &stack_b); //reverse rotation for both stacks
+					rrr(stack_a, stack_b); //reverse rotation for both stacks
 				while (j++ < dif_rot)
-					rra(&stack_a);
+					rra(stack_a);
 			}
 			else if (min_rot_a < min_rot_b)
 			{
+	printf("1\n");
 				common_rot = min_rot_a;
 				dif_rot = (min_rot_b - min_rot_a);
 				while (i++ < common_rot)
-					rrr(&stack_a, &stack_b);	//reverse rotation for both stacks
+					rrr(stack_a, stack_b);	//reverse rotation for both stacks
 				while (j++ < dif_rot)
-					rrb(&stack_b);
+					rrb(stack_b);
 			}
 		}
 	}
 
 	else
 	{
+	printf("1\n");
 		if (rot_type_b == 0)
 		{
 			while(i++ < min_rot_b)
-				rb(&stack_b);
+				rb(stack_b);
 		}
 		else if (rot_type_b == 1)
 		{
 			while(i++ < min_rot_b)
-				rrb(&stack_b);
+				rrb(stack_b);
 		}
 
 		i = 0;
 		if (rot_type_a == 0)
 		{
 			while(i++ < min_rot_a)
-				ra(&stack_a);
+				ra(stack_a);
 		}
 		else if (rot_type_a == 1)
 		{
 			while(i++ < min_rot_a)
-				rra(&stack_a);
+				rra(stack_a);
+	printf("1\n");
 		}
 	}
-	pa(&stack_a, &stack_b);
+	pb(stack_b, stack_a);
+	return (0);
 }
 
 

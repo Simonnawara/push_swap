@@ -24,13 +24,13 @@ void	push(t_stack **src, t_stack **dest)
 	*dest = temp;
 }
 
-void	pa(t_stack **stack_a, t_stack **stack_b)
+void	pa(t_stack **stack_b, t_stack **stack_a)
 {
 	push(stack_b, stack_a);
 	ft_putendl_fd("pa", 1);
 }
 
-void	pb(t_stack **stack_b, t_stack **stack_a)
+void	pb(t_stack **stack_a, t_stack **stack_b)
 {
 	push(stack_b, stack_a);
 	ft_putendl_fd("pb", 1);

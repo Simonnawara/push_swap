@@ -86,7 +86,9 @@ void append_node(t_stack **head, int value)
 
 int	parse_and_append(t_stack **stack, char *str)
 {
-	long num = ft_atoi(str);
+	long num;
+
+	num = ft_atoi(str);
 	if (num < INT_MIN || num > INT_MAX)
 		return (-1);
 	append_node(stack, (int)num);
@@ -109,15 +111,19 @@ int main(int argc, char **argv)
 	{
 		if (!is_number(argv[i]) ||
 			(parse_and_append(&stack_a, argv[i]) == -1))
-		{
-			ft_putendl_fd("Error", 2);
-			free_list(stack_a);
-			exit(EXIT_FAILURE);
-		}
+			{
+				ft_putendl_fd("Error", 2);
+				free_list(stack_a);
+				exit(EXIT_FAILURE);
+			}
 		i++;
 	}
+
+
 	ft_putendl_fd("Stack contents:", 1);
 	print_list(stack_a);
+	printf("\n");
+	check_and_push(&stack_a);
 	free_list(stack_a);
 	return (0);
 }
