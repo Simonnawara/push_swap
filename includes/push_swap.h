@@ -30,31 +30,44 @@ typedef struct s_stack
 	struct s_stack *next;
 } t_stack;
 
-
+// push //
 void	push(t_stack **src, t_stack **dest);
 void	pa(t_stack **stack_a, t_stack **stack_b);
 void	pb(t_stack **stack_b, t_stack **stack_a);
 
-void	reverse_rotate(t_stack **stack);
-void	rra(t_stack **stack_a);
-void	rrb(t_stack **stack_b);
-void	rrr(t_stack **stack_a, t_stack **stack_b);
-
-void	rotate(t_stack **stack);
-void	ra(t_stack **stack_a);
-void	rb(t_stack **stack_b);
-void	rr(t_stack **stack_a, t_stack **stack_b);
-
+// swap //
 void	swap(t_stack *stack);
 void	sa(t_stack **stack_a);
 void	sb(t_stack **stack_b);
 void	ss(t_stack **stack_a, t_stack **stack_b);
 
-int get_max(t_stack *stack);
-void radix_sort(t_stack **stack_a, t_stack **stack_b);
-void counting_sort(t_stack **stack_a, t_stack **stack_b, int exp);
-int is_sorted(t_stack *stack);
-void free_stack(t_stack **stack);
-void print_stack(t_stack *stack);
+// normal rotate //
+void	rotate(t_stack **stack);
+void	ra(t_stack **stack_a);
+void	rb(t_stack **stack_b);
+void	rr(t_stack **stack_a, t_stack **stack_b);
+
+// reverse rotate //
+void	reverse_rotate(t_stack **stack);
+void	rra(t_stack **stack_a);
+void	rrb(t_stack **stack_b);
+void	rrr(t_stack **stack_a, t_stack **stack_b);
+
+
+// get_rot_data //
+int find_index_up(int value, t_stack *stack_a);
+int	find_index_down(int value, t_stack *stack_b);
+int get_rot_type(int index, t_stack *stack_b);
+int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type);
+int min_rot_amount_a(int index, t_stack *stack_a, int *rotation_type);
+
+// pvalue_utils //
+int	min_lst(t_stack *stack_b);
+int	max_lst(t_stack *stack_b);
+int get_stack_size(t_stack *stack);
+t_stack *get_last_node(t_stack *stack);
+
+// pvalue //
+void get_rot_a(t_stack *stack_a, t_stack *stack_b);
 
 #endif
