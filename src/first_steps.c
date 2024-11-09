@@ -30,7 +30,7 @@ int check_and_push(t_stack **stack_a)
 		}
 		else
 		{
-			while (stack_size > 3)
+			while (stack_size > 0) // I can change it to stack_size > 3 to add the bruteforce method.
 			{
 				get_rot_a(stack_a, &stack_b);
 				stack_size--;

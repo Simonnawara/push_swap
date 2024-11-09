@@ -33,9 +33,12 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 	int common_rot;
 	int dif_rot;
 
-
 	printf("print stack_b : ");
 	print_list(*stack_b);
+
+	printf("print stack_a : ");
+	print_list(*stack_a);
+
 	min_rot_b = min_rot_amount(*stack_a, *stack_b, &rot_type_b);
 		printf("min_rot_b : %d\n", min_rot_b);
 
@@ -50,15 +53,12 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 
 	i = 0;
 	j = 0;
-	printf("1\n");
 	if (rot_type_a == rot_type_b)
 	{
 		if (rot_type_a == 0 && rot_type_b == 0)
 		{
-	printf("1\n");
 			if (min_rot_b <= min_rot_a)
 			{
-	printf("1\n");
 				common_rot = min_rot_b; //number to represent the amout of rotations needed
 				dif_rot = (min_rot_a - min_rot_b);
 				while (i++ < common_rot)
@@ -68,7 +68,6 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 			}
 			else if (min_rot_a < min_rot_b)
 			{
-	printf("1\n");
 				common_rot = min_rot_a;
 				dif_rot = (min_rot_b - min_rot_a);
 				while (i++ < common_rot)
@@ -80,10 +79,8 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 
 		else if (rot_type_a == 1 && rot_type_b == 1)
 		{
-	printf("1\n");
 			if (min_rot_b <= min_rot_a)
 			{
-	printf("1\n");
 				common_rot = min_rot_b; //number to represent the amout of rotations needed
 				dif_rot = (min_rot_a - min_rot_b);
 				while (i++ < common_rot)
@@ -93,7 +90,6 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 			}
 			else if (min_rot_a < min_rot_b)
 			{
-	printf("1\n");
 				common_rot = min_rot_a;
 				dif_rot = (min_rot_b - min_rot_a);
 				while (i++ < common_rot)
@@ -106,7 +102,6 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 
 	else
 	{
-	printf("1\n");
 		if (rot_type_b == 0)
 		{
 			while(i++ < min_rot_b)
@@ -128,10 +123,11 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 		{
 			while(i++ < min_rot_a)
 				rra(stack_a);
-	printf("1\n");
 		}
 	}
 	pb(stack_b, stack_a);
+	printf("print stack_b2 : ");
+	print_list(*stack_b);
 	return (0);
 }
 
