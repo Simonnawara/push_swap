@@ -50,7 +50,7 @@ int	find_index_down(int value, t_stack *stack_b)
 	int	index;
 	int	current_index;
 
-	max = value;
+	max = INT_MIN;
 	index = -1;
 	current_index = 0;
 	while (stack_b)
@@ -102,6 +102,10 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 	min_rot = get_stack_size(stack_b); //c'est pas possible que le nombre de rotation soit plus grand que la taille du stack elle même
 	while(stack_a)
 	{
+/* 		if (stack_a->value < min_lst(stack_b))
+		{
+			return (0); //probably will need to change
+		} */
 		index = find_index_down(stack_a->value, stack_b);
 		sb_size = get_stack_size(stack_b);
 		rotation = 0;
