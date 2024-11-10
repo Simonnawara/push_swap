@@ -47,9 +47,18 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 
 	stack_a_value = find_index_up(tos, *stack_a); //now we have the index of the value we want to bring up to the top of stack_a
 		printf("stack_a_value : %d\n", stack_a_value);
+	if (stack_a_value == -1)
+	{
+    	printf("Invalid index found in find_index_up, skipping.\n");
+    	return (-1); // Or continue to the next step if skipping is preferred
+	}
 
 	min_rot_a = min_rot_amount_a(stack_a_value, *stack_a, &rot_type_a); //gives us the amount of rotation needed to get the value on top of stack_a, and the rot type.
 		printf("min_rot_a : %d\n", min_rot_a);
+	if (min_rot_a == -1) {
+    	printf("Invalid index in min_rot_amount_a function\n");
+    	return (-1); // Or handle as needed
+	}
 
 	i = 0;
 	j = 0;

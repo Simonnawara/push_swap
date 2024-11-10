@@ -30,6 +30,11 @@ int	max_lst(t_stack *stack_b)
 {
 	int	max;
 
+	if (!stack_b) // Handle empty stack
+	{
+		ft_printf("Error, empty stack");
+        return (-5);
+	}
 	max = stack_b->value;
 	while (stack_b)
 	{

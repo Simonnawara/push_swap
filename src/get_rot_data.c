@@ -35,6 +35,10 @@ int find_index_up(int value, t_stack *stack_a)
         stack_a = stack_a->next;
         current_index++;
     }
+	if (closest == -1)
+	{
+        printf("No valid index found in find_index_up for value: %d\n", value);
+    }
     return (closest);
 }
 
@@ -51,7 +55,7 @@ int	find_index_down(int value, t_stack *stack_b)
 	int	current_index;
 
 	max = INT_MIN;
-	index = -1;
+	index = 0;
 	current_index = 0;
 	while (stack_b)
 	{
@@ -99,20 +103,27 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 	int rotation;
 	int min_rot;
 
+	if (!stack_b) // Handle empty stack_b
+	{
+		ft_printf("Stack_b empty in min_rot_amount function\n");
+        return (0);
+	}
+
 	min_rot = get_stack_size(stack_b); //c'est pas possible que le nombre de rotation soit plus grand que la taille du stack elle même
 	while(stack_a)
 	{
-/* 		if (stack_a->value < min_lst(stack_b))
-		{
-			return (0); //probably will need to change
-		} */
 		index = find_index_down(stack_a->value, stack_b);
+		if (index == -1) // If index not found
+        {
+            stack_a = stack_a->next;
+            continue;
+        }
 		sb_size = get_stack_size(stack_b);
 		rotation = 0;
-		if (index <= ((sb_size / 2) + 1))
-			rotation += index; //normal rotation
+		if (index <= (sb_size / 2)) //if (index <= ((sb_size / 2) + 1)) before, changed to chatgpt version
+			rotation = index; //normal rotation
 		else
-			rotation += ((sb_size + 1) - index); //reverse rotation
+			rotation = (sb_size - index); //reverse rotation //rotation = ((sb_size + 1) - index); before, now changed to chatgpt version
 		if (rotation < min_rot)
 		{
 			min_rot = rotation;
@@ -130,10 +141,19 @@ int min_rot_amount_a(int index, t_stack *stack_a, int *rotation_type)
 
 	rotation = 0;
 	sb_size = get_stack_size(stack_a);
-	if (index <= ((sb_size / 2) + 1))
-		rotation += index; //normal rotation
+
+ 	if (index == -1) // Handle invalid index
+    {
+        *rotation_type = -1;
+		ft_printf("invalid index in min_rot_amount_a function\n");
+        return (-1);
+    }
+
+
+	if (index <= (sb_size / 2)) //if (index <= ((sb_size / 2) + 1)) before, changed to chatgpt version
+		rotation = index; //normal rotation
 	else
-		rotation += ((sb_size + 1) - index); //reverse rotation
+		rotation = (sb_size - index); //reverse rotation //rotation = ((sb_size + 1) - index); before, changed to chatgpt version
 	*rotation_type = get_rot_type(index, stack_a);
 	return (rotation);
 }
