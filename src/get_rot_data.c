@@ -18,26 +18,35 @@ int find_index_up(int value, t_stack *stack_a)
     int closest;
     int current_index;
     int closest_diff; // Initialize with a large value
+	int max_list_index;
+	int max_value;
 
-	closest = -1;
+	closest = -1; //changed, was -1 before
 	current_index = 0;
 	closest_diff = INT_MAX;
+	max_list_index = -1;
+	max_value = max_lst(stack_a);
+
     while (stack_a)
 	{
         if (stack_a->value > value) // Check if current value is greater than the input value
 		{
-            if (stack_a->value - value < closest_diff) // If difference is smaller than the current closest
+            if ((stack_a->value - value) < closest_diff) // If difference is smaller than the current closest
 			{
                 closest_diff = stack_a->value - value;
                 closest = current_index; // Update the closest index
             }
         }
+
+		if(stack_a->value == max_value)
+			max_list_index = current_index;
         stack_a = stack_a->next;
         current_index++;
     }
 	if (closest == -1)
 	{
-        printf("No valid index found in find_index_up for value: %d\n", value);
+        printf("max_lst(stack_a) because closest = -1 for value: %d\n", value);
+		return (max_list_index);
     }
     return (closest);
 }
@@ -53,21 +62,43 @@ int	find_index_down(int value, t_stack *stack_b)
 	int	max;
 	int	index;
 	int	current_index;
+	int min_list_index;
+	int min_value;
+	int found;
 
 	max = INT_MIN;
 	index = 0;
 	current_index = 0;
+	min_list_index = -1;
+	min_value = INT_MAX;
+	found = 0;
 	while (stack_b)
 	{
 		if (stack_b->value < value && stack_b->value > max)
 		{
 			max = stack_b->value;
 			index = current_index;
+			found = 1;
+		}
+
+		// Track the index of the smallest element in the stack
+		if (stack_b->value < min_value)
+		{
+			min_value = stack_b->value;
+			min_list_index = current_index;
 		}
 		stack_b = stack_b->next;
 		current_index++;
 	}
+
+	if(!found)
+	{
+		printf("Returning min_list_index because closest = -1 for value: %d\n", value);
+		printf("OOYYYYYYY : %d\n", min_list_index);
+		return (min_list_index);
+	}
 	return (index);
+
 }
 
 //gets the type of rotation needed depending on the index of a value within the stack
@@ -103,7 +134,7 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 	int rotation;
 	int min_rot;
 
-	if (!stack_b) // Handle empty stack_b
+	if (!stack_b || get_stack_size(stack_b) == 0) // Handle empty stack_b
 	{
 		ft_printf("Stack_b empty in min_rot_amount function\n");
         return (0);
@@ -114,10 +145,7 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 	{
 		index = find_index_down(stack_a->value, stack_b);
 		if (index == -1) // If index not found
-        {
-            stack_a = stack_a->next;
-            continue;
-        }
+			index = min_lst(stack_b);
 		sb_size = get_stack_size(stack_b);
 		rotation = 0;
 		if (index <= (sb_size / 2)) //if (index <= ((sb_size / 2) + 1)) before, changed to chatgpt version
@@ -142,7 +170,7 @@ int min_rot_amount_a(int index, t_stack *stack_a, int *rotation_type)
 	rotation = 0;
 	sb_size = get_stack_size(stack_a);
 
- 	if (index == -1) // Handle invalid index
+ 	if (index == -1 || sb_size == 0) // Handle invalid index
     {
         *rotation_type = -1;
 		ft_printf("invalid index in min_rot_amount_a function\n");
