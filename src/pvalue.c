@@ -40,13 +40,13 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 	print_list(*stack_a);
 
 	min_rot_b = min_rot_amount(*stack_a, *stack_b, &rot_type_b);
-		printf("min_rot_b : %d\n", min_rot_b);
+		//printf("min_rot_b : %d\n", min_rot_b);
 
 	tos = max_lst(*stack_b); //stack_b is empty, so it's trying to go through an empty list
-		printf("tos (max number in stack b) : %d\n", tos);
+		//printf("tos (max number in stack b) : %d\n", tos);
 
 	stack_a_value = find_index_up(tos, *stack_a); //now we have the index of the value we want to bring up to the top of stack_a
-		printf(" stack_a_value : %d\n", stack_a_value);
+		//printf(" stack_a_value : %d\n", stack_a_value);
 	if (stack_a_value == -1)
 	{
     	printf("Invalid index found in find_index_up, skipping.\n");
@@ -54,15 +54,20 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 	}
 
 	min_rot_a = min_rot_amount_a(stack_a_value, *stack_a, &rot_type_a); //gives us the amount of rotation needed to get the value on top of stack_a, and the rot type.
-		printf("min_rot_a : %d\n", min_rot_a);
+		//printf("min_rot_a : %d\n", min_rot_a);
 	if (min_rot_a == -1) {
     	printf("Invalid index in min_rot_amount_a function\n");
     	return (-1); // Or handle as needed
 	}
 
-	int stack_a_size = get_stack_size(*stack_a);;
 	i = 0;
 	j = 0;
+	int s_val = &stack_a->value;
+	if ((s_val) == min_lst(*stack_b) && min_lst(*stack_b) == get_last_node(*stack_b)->value)
+		{
+			rrb(stack_b);
+			printf("DOING THE STUFF");
+		}
 	if (rot_type_a == rot_type_b)
 	{
 		if (rot_type_a == 0 && rot_type_b == 0)
@@ -133,11 +138,10 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 		{
 			while(i++ < min_rot_a)
 				rra(stack_a);
-		}
+		}	
 	}
 
-	if (stack_a_value == min_lst(*stack_b) && min_lst(*stack_b) == get_last_node(*stack_b)->value && get_stack_size(*stack_b) == stack_a_size - 1)
-		rrb(stack_b);
+
 	pb(stack_b, stack_a);
 
 
