@@ -65,7 +65,11 @@ int min_rot_amount_a(int index, t_stack *stack_a, int *rotation_type);
 int	min_lst(t_stack *stack_b);
 int	max_lst(t_stack *stack_b);
 int get_stack_size(t_stack *stack);
+int get_last_node_index(t_stack *stack);
+int get_last_node_value(t_stack *stack);
 t_stack *get_last_node(t_stack *stack);
+int get_node_index(int value, t_stack *stack);
+int find_next_greater_than(int value, t_stack *stack);
 
 // pvalue //
 int get_rot_a(t_stack **stack_a, t_stack **stack_b);

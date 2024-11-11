@@ -51,6 +51,31 @@ int find_index_up(int value, t_stack *stack_a)
     return (closest);
 }
 
+
+/* int find_index_up(int value, t_stack *stack_a) {
+    int closest = -1;
+    int current_index = 0;
+    int closest_diff = INT_MAX;
+
+    while (stack_a) {
+        if (stack_a->value > value) {
+            if (stack_a->value - value < closest_diff) {
+                closest_diff = stack_a->value - value;
+                closest = current_index;
+            }
+        }
+        stack_a = stack_a->next;
+        current_index++;
+    }
+
+    if (closest == -1) {
+        printf("No valid index found in find_index_up for value: %d\n", value);
+    }
+
+    return closest;
+} */
+
+
 //gets the index of the value right under the one we give in parameter inside of a stack
 // actually : before calling the function, add a protection saying :
 // if(value < min_lst(stack_b)) //this means that if would be the new minimun value if pushed to stack_b
@@ -162,7 +187,7 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 	return (min_rot);
 }
 
-int min_rot_amount_a(int index, t_stack *stack_a, int *rotation_type)
+/* int min_rot_amount_a(int index, t_stack *stack_a, int *rotation_type)
 {
 	int sb_size;
 	int rotation;
@@ -184,4 +209,23 @@ int min_rot_amount_a(int index, t_stack *stack_a, int *rotation_type)
 		rotation = (sb_size - index); //reverse rotation //rotation = ((sb_size + 1) - index); before, changed to chatgpt version
 	*rotation_type = get_rot_type(index, stack_a);
 	return (rotation);
+} */
+
+
+
+int min_rot_amount_a(int index, t_stack *stack_a, int *rotation_type) {
+    int sb_size = get_stack_size(stack_a);
+    if (index == -1) {
+        *rotation_type = -1;
+        return -1;
+    }
+
+    if (index <= sb_size / 2) {
+        *rotation_type = 0; // Normal rotation
+        return index;
+    } else {
+        *rotation_type = 1; // Reverse rotation
+        return sb_size - index;
+    }
 }
+

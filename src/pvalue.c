@@ -20,6 +20,7 @@
 // 4. Push stack_A value to stack_B value
 // 5. Repeat until 3 values are left on stack_A
 
+
 int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from single pointer to double pointer
 {
 	int i;
@@ -39,14 +40,29 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 	printf("print stack_a : ");
 	print_list(*stack_a);
 
+
+/* 	if ((*stack_a)->value < find_index_up(min_lst(*stack_b), *stack_b))
+	{
+		if (get_node_index(min_lst(*stack_b), *stack_b) == (get_stack_size(*stack_b) - 1))
+			rrb(stack_b);
+		printf("DOING THE STUFF\n");
+	}
+ */
+
+/* 	if (get_node_index(min_lst(*stack_b), *stack_b) == (get_stack_size(*stack_b) - 1))
+		rrb(stack_b); //brings the min_list element to the top of stack
+ */
 	min_rot_b = min_rot_amount(*stack_a, *stack_b, &rot_type_b);
 		//printf("min_rot_b : %d\n", min_rot_b);
 
-	tos = max_lst(*stack_b); //stack_b is empty, so it's trying to go through an empty list
-		//printf("tos (max number in stack b) : %d\n", tos);
+	if (!*stack_b) {
+		tos = (*stack_a)->value; // Choose the first value from `stack_a`
+	} else {
+		tos = max_lst(*stack_b);
+	}
 
 	stack_a_value = find_index_up(tos, *stack_a); //now we have the index of the value we want to bring up to the top of stack_a
-		//printf(" stack_a_value : %d\n", stack_a_value);
+		//printf("stack_a_value : %d\n", stack_a_value);
 	if (stack_a_value == -1)
 	{
     	printf("Invalid index found in find_index_up, skipping.\n");
@@ -62,12 +78,7 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 
 	i = 0;
 	j = 0;
-	int s_val = &stack_a->value;
-	if ((s_val) == min_lst(*stack_b) && min_lst(*stack_b) == get_last_node(*stack_b)->value)
-		{
-			rrb(stack_b);
-			printf("DOING THE STUFF");
-		}
+
 	if (rot_type_a == rot_type_b)
 	{
 		if (rot_type_a == 0 && rot_type_b == 0)
@@ -113,6 +124,12 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 					rrb(stack_b);
 			}
 		}
+		/* if (((*stack_a)->value < find_index_up(min_lst(*stack_b), *stack_b))
+			&& get_node_index(min_lst(*stack_b), *stack_b) == (get_stack_size(*stack_b) - 1))
+		{
+			printf("We're in the if condition\n");
+			rrb(stack_b);
+		} */
 	}
 
 	else
@@ -138,9 +155,15 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 		{
 			while(i++ < min_rot_a)
 				rra(stack_a);
-		}	
+		}
 	}
 
+	if ((*stack_a)->value < find_next_greater_than(min_lst(*stack_b), *stack_b) &&
+		get_node_index(min_lst(*stack_b), *stack_b) == (get_stack_size(*stack_b) - 1))
+	{
+		printf("Condition met: performing rrb(stack_b)\n");
+		rrb(stack_b);
+	}
 
 	pb(stack_b, stack_a);
 

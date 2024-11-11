@@ -59,11 +59,64 @@ int get_stack_size(t_stack *stack)
 	return (size);
 }
 
-t_stack *get_last_node(t_stack *stack)
+int get_last_node_index(t_stack *stack)
+{
+    int index = 0;
+
+    if (!stack)
+        return (-1); // indicates an empty stack
+    while (stack->next != NULL)
+    {
+        stack = stack->next;
+        index++;
+    }
+    return index;
+}
+
+int get_last_node_value(t_stack *stack)
 {
     if (!stack)
-        return NULL;
+        return (-1);
     while (stack->next != NULL)
         stack = stack->next;
+    return stack->value;
+}
+
+t_stack *get_last_node(t_stack *stack) {
+    if (!stack) return NULL;
+    while (stack->next)
+        stack = stack->next;
     return stack;
+}
+
+int get_node_index(int value, t_stack *head)
+{
+    int index;
+    t_stack *current;
+
+	index = 0;
+	current = head;
+    while (current != NULL) {
+        if (current->value == value) {
+            return index;
+        }
+        current = current->next;
+        index++;
+    }
+    return -1; // Value not found
+}
+
+
+int find_next_greater_than(int value, t_stack *stack) {
+	int next_greater = INT_MAX;
+	int found = 0;
+
+	while (stack) {
+		if (stack->value > value && stack->value < next_greater) {
+			next_greater = stack->value;
+			found = 1;
+		}
+		stack = stack->next;
+	}
+	return (found ? next_greater : INT_MAX);
 }
