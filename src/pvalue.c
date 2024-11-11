@@ -26,7 +26,7 @@ void rotate_to_position(t_stack **stack, int target_value) {
     int stack_size = get_stack_size(*stack);
 
     if (position == -1)
-        return;  // Value not found, no rotation needed
+        return ;  // Value not found, no rotation needed
 
     // Choose rotation direction based on position in stack
     if (position <= stack_size / 2) {
@@ -54,13 +54,6 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 	int stack_a_value;
 	int common_rot;
 	int dif_rot;
-
-	printf("print stack_b : ");
-	print_list(*stack_b);
-
-	printf("print stack_a : ");
-	print_list(*stack_a);
-
 
 /* 	if ((*stack_a)->value < find_index_up(min_lst(*stack_b), *stack_b))
 	{
@@ -179,12 +172,12 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 		}
 	}
 
-/* 	if ((*stack_a)->value < find_next_greater_than(min_lst(*stack_b), *stack_b) &&
+	if ((*stack_a)->value < find_next_greater_than(min_lst(*stack_b), *stack_b) &&
 		get_node_index(min_lst(*stack_b), *stack_b) == (get_stack_size(*stack_b) - 1))
 	{
 		printf("Condition met: performing rrb(stack_b)\n");
 		rrb(stack_b);
-	} */
+	}
 
 	if ((*stack_a)->value < min_lst(*stack_b) || (*stack_a)->value > max_lst(*stack_b))
 	{
