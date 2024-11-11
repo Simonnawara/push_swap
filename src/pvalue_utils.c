@@ -146,7 +146,7 @@ int get_node_index(int value, t_stack *head)
 }
 
 
-/* int find_next_greater_than(int value, t_stack *stack)
+int find_next_greater_than(int value, t_stack *stack)
 {
 	int next_greater = INT_MAX;
 	int found = 0;
@@ -159,9 +159,9 @@ int get_node_index(int value, t_stack *head)
 		stack = stack->next;
 	}
 	return (found ? next_greater : INT_MAX);
-} */
+}
 
-int find_next_greater_than(int value, t_stack *stack)
+/* int find_next_greater_than(int value, t_stack *stack)
 {
     int closest = -1; // Initialize to indicate no closest found
     int min_diff = INT_MAX;
@@ -178,4 +178,4 @@ int find_next_greater_than(int value, t_stack *stack)
     if (closest == -1) // No greater found, so get smallest value
         closest = min_lst(stack);
     return closest;
-}
+} */
