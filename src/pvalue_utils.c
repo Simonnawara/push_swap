@@ -51,39 +51,6 @@ int	max_lst(t_stack *stack_b)
 	return (max);
 }
 
-/* int	min_lst(t_stack *stack_b)
-{
-	int	min;
-
-	min = stack_b->value;
-	while (stack_b)
-	{
-		if (stack_b->value < min)
-			min = stack_b->value;
-		stack_b = stack_b->next;
-	}
-	return (min);
-} */
-
-/* int	max_lst(t_stack *stack_b)
-{
-	int	max;
-
-	if (!stack_b) // Handle empty stack
-	{
-		ft_printf("Error, empty stack");
-        return (-1);
-	}
-	max = stack_b->value;
-	while (stack_b)
-	{
-		if (stack_b->value > max)
-			max = stack_b->value;
-		stack_b = stack_b->next;
-	}
-	return (max);
-} */
-
 //pour calculer le type de rotation necessaire (normal vs reverse)
 int get_stack_size(t_stack *stack)
 {
