@@ -29,7 +29,7 @@ int find_index_up(int value, t_stack *stack_a)
 
     while (stack_a)
 	{
-        if (stack_a->value > value) // Check if current value is greater than the input value
+        if (stack_a->value > value || (stack_a->value == 0 && value < 0)) // Check if current value is greater than the input value
 		{
             if ((stack_a->value - value) < closest_diff) // If difference is smaller than the current closest
 			{
@@ -99,7 +99,7 @@ int	find_index_down(int value, t_stack *stack_b)
 	found = 0;
 	while (stack_b)
 	{
-		if (stack_b->value < value && stack_b->value > max)
+		if ((stack_b->value < value && stack_b->value > max) || (stack_b->value == 0 && value > 0))
 		{
 			max = stack_b->value;
 			index = current_index;
@@ -119,7 +119,6 @@ int	find_index_down(int value, t_stack *stack_b)
 	if(!found)
 	{
 		printf("Returning min_list_index because closest = -1 for value: %d\n", value);
-		printf("OOYYYYYYY : %d\n", min_list_index);
 		return (min_list_index);
 	}
 	return (index);
@@ -162,7 +161,7 @@ int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type)
 	if (!stack_b || get_stack_size(stack_b) == 0) // Handle empty stack_b
 	{
 		ft_printf("Stack_b empty in min_rot_amount function\n");
-        return (0);
+        return (-1); //was 0 previously
 	}
 
 	min_rot = get_stack_size(stack_b); //c'est pas possible que le nombre de rotation soit plus grand que la taille du stack elle même

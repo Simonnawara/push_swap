@@ -21,6 +21,27 @@
 // 5. Repeat until 3 values are left on stack_A
 
 
+void rotate_to_position(t_stack **stack, int target_value) {
+    int position = get_node_index(target_value, *stack);
+    int stack_size = get_stack_size(*stack);
+
+    if (position == -1)
+        return;  // Value not found, no rotation needed
+
+    // Choose rotation direction based on position in stack
+    if (position <= stack_size / 2) {
+        // Rotate upwards (ra/rb) if target is in the first half
+        while (position-- > 0)
+            rb(stack);  // or ra(stack) depending on which stack
+    } else {
+        // Rotate downwards (rra/rrb) if target is in the second half
+        position = stack_size - position;
+        while (position-- > 0)
+            rrb(stack);  // or rra(stack) depending on which stack
+    }
+}
+
+
 int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from single pointer to double pointer
 {
 	int i;
@@ -158,11 +179,16 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 		}
 	}
 
-	if ((*stack_a)->value < find_next_greater_than(min_lst(*stack_b), *stack_b) &&
+/* 	if ((*stack_a)->value < find_next_greater_than(min_lst(*stack_b), *stack_b) &&
 		get_node_index(min_lst(*stack_b), *stack_b) == (get_stack_size(*stack_b) - 1))
 	{
 		printf("Condition met: performing rrb(stack_b)\n");
 		rrb(stack_b);
+	} */
+
+	if ((*stack_a)->value < min_lst(*stack_b) || (*stack_a)->value > max_lst(*stack_b))
+	{
+    	rotate_to_position(stack_b, min_lst(*stack_b));  // Adjust position
 	}
 
 	pb(stack_b, stack_a);

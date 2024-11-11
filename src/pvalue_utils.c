@@ -16,7 +16,13 @@ int	min_lst(t_stack *stack_b)
 {
 	int	min;
 
-	min = stack_b->value;
+	if(!stack_b)
+	{
+		ft_printf("Error, empty stack");
+        return (INT_MAX); // Use INT_MAX to indicate an error state
+	}
+
+	min = INT_MAX;
 	while (stack_b)
 	{
 		if (stack_b->value < min)
@@ -33,6 +39,39 @@ int	max_lst(t_stack *stack_b)
 	if (!stack_b) // Handle empty stack
 	{
 		ft_printf("Error, empty stack");
+        return (INT_MIN);
+	}
+	max = INT_MIN;
+	while (stack_b)
+	{
+		if (stack_b->value > max)
+			max = stack_b->value;
+		stack_b = stack_b->next;
+	}
+	return (max);
+}
+
+/* int	min_lst(t_stack *stack_b)
+{
+	int	min;
+
+	min = stack_b->value;
+	while (stack_b)
+	{
+		if (stack_b->value < min)
+			min = stack_b->value;
+		stack_b = stack_b->next;
+	}
+	return (min);
+} */
+
+/* int	max_lst(t_stack *stack_b)
+{
+	int	max;
+
+	if (!stack_b) // Handle empty stack
+	{
+		ft_printf("Error, empty stack");
         return (-1);
 	}
 	max = stack_b->value;
@@ -43,7 +82,7 @@ int	max_lst(t_stack *stack_b)
 		stack_b = stack_b->next;
 	}
 	return (max);
-}
+} */
 
 //pour calculer le type de rotation necessaire (normal vs reverse)
 int get_stack_size(t_stack *stack)
@@ -107,7 +146,8 @@ int get_node_index(int value, t_stack *head)
 }
 
 
-int find_next_greater_than(int value, t_stack *stack) {
+int find_next_greater_than(int value, t_stack *stack)
+{
 	int next_greater = INT_MAX;
 	int found = 0;
 
@@ -120,3 +160,22 @@ int find_next_greater_than(int value, t_stack *stack) {
 	}
 	return (found ? next_greater : INT_MAX);
 }
+
+/* int find_next_greater_than(int value, t_stack *stack)
+{
+    int closest = -1; // Initialize to indicate no closest found
+    int min_diff = INT_MAX;
+    t_stack *current = stack;
+
+    while (current) {
+        int diff = current->value - value;
+        if (diff > 0 && diff < min_diff) { // Closest positive difference
+            min_diff = diff;
+            closest = current->value;
+        }
+        current = current->next;
+    }
+    if (closest == -1) // No greater found, so get smallest value
+        closest = min_lst(stack);
+    return closest;
+} */
