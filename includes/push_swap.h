@@ -6,7 +6,7 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 14:55:43 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/04 15:07:08 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:57:51 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,5 @@ int check_and_push(t_stack **stack_a);
 
 // main //
 void print_list(t_stack *head);
+int parse_arguments(t_stack **stack, char **args);
 #endif

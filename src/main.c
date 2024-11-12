@@ -6,7 +6,7 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:46:05 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/04 16:47:15 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/12 10:15:34 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,35 +95,57 @@ int	parse_and_append(t_stack **stack, char *str)
 	return (0);
 }
 
-int main(int argc, char **argv)
-{
-	t_stack	*stack_a;
-	int		i;
+// Main parsing function to handle arguments and fill stack
+int parse_arguments(t_stack **stack, char **args) {
+    int i = 0;
+    
+    while (args[i]) {
+        if (!is_number(args[i]) || parse_and_append(stack, args[i]) == -1) {
+            ft_putendl_fd("Error", 2);
+            free_list(*stack);
+            return (-1);
+        }
+        i++;
+    }
+    return (0);
+}
 
-	stack_a = NULL;
-	i = 1;
-	if (argc < 2)
-	{
-		ft_putendl_fd("Error: No arguments provided", 2);
-		return (0);
-	}
-	while (i < argc)
-	{
-		if (!is_number(argv[i]) ||
-			(parse_and_append(&stack_a, argv[i]) == -1))
-			{
-				ft_putendl_fd("Error", 2);
-				free_list(stack_a);
-				exit(EXIT_FAILURE);
-			}
-		i++;
-	}
+int main(int argc, char **argv) {
+    t_stack *stack_a = NULL;
+    char **split_args;
+    int i = 1;
 
+    if (argc < 2) {
+        ft_putendl_fd("Error: No arguments provided", 2);
+        return (0);
+    }
+    
+    while (i < argc) {
+        split_args = ft_split(argv[i], ' '); // Split argument by spaces
+        if (!split_args) {
+            ft_putendl_fd("Error: Memory allocation failed", 2);
+            free_list(stack_a);
+            return (-1);
+        }
+        
+        // Parse split arguments and append them to the stack
+        if (parse_arguments(&stack_a, split_args) == -1) {
+            free(split_args);
+            return (-1);
+        }
 
-	ft_putendl_fd("Stack contents:", 1);
-	print_list(stack_a);
+        // Free split arguments after processing
+        int j = 0;
+        while (split_args[j])
+            free(split_args[j++]);
+        free(split_args);
+        i++;
+    }
+
+    ft_putendl_fd("Stack contents:", 1);
+    print_list(stack_a);
 	printf("\n");
-	check_and_push(&stack_a);
-	free_list(stack_a);
-	return (0);
+    check_and_push(&stack_a); // Continue with push_swap logic
+    free_list(stack_a);
+    return (0);
 }

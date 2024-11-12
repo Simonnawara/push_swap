@@ -6,7 +6,7 @@
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 23:01:28 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/08 15:25:20 by sinawara         ###   ########.fr       */
+/*   Updated: 2024/11/12 10:14:11 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void rotate_to_position(t_stack **stack, int target_value) {
     }
 }
 
-
 int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from single pointer to double pointer
 {
 	int i;
@@ -55,8 +54,6 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 	int common_rot;
 	int dif_rot;
 
-	printf("print stack_b : ");
-	print_list(*stack_b);
 
 	printf("print stack_a : ");
 	print_list(*stack_a);
@@ -179,18 +176,6 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 		}
 	}
 
-	/* 	if ((*stack_a)->value < find_next_greater_than(min_lst(*stack_b), *stack_b) &&
-		get_node_index(min_lst(*stack_b), *stack_b) == (get_stack_size(*stack_b) - 1))
-	{
-		printf("Condition met: performing rrb(stack_b)\n");
-		rrb(stack_b);
-	} */
-/*
-	if ((*stack_a)->value < min_lst(*stack_b) || (*stack_a)->value > max_lst(*stack_b))
-	{
-    	rotate_to_position(stack_b, min_lst(*stack_b));  // Adjust position
-	} */
-
 	if ((*stack_a)->value < find_next_greater_than(min_lst(*stack_b), *stack_b) &&
 		get_node_index(min_lst(*stack_b), *stack_b) == (get_stack_size(*stack_b) - 1))
 	{
@@ -198,7 +183,18 @@ int get_rot_a(t_stack **stack_a, t_stack **stack_b) //recently changed from sing
 		rrb(stack_b);
 	}
 
+/* 	if ((*stack_a)->value < min_lst(*stack_b) || (*stack_a)->value > max_lst(*stack_b))
+	{
+    	rotate_to_position(stack_b, min_lst(*stack_b));  // Adjust position
+	} */
 
+/* 	if ((*stack_a)->value < find_next_greater_than(min_lst(*stack_b), *stack_b) &&
+		get_node_index(min_lst(*stack_b), *stack_b) == (get_stack_size(*stack_b) - 1))
+	{
+		printf("Condition met: performing rrb(stack_b)\n");
+		rrb(stack_b);
+	}
+ */
 
 	pb(stack_b, stack_a);
 
