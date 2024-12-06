@@ -5,28 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:55:46 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/07 15:55:49 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:36 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:36:36 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	i;
-	size_t	x;
+	size_t	srcsize;
+	size_t	p;
 
-	x = ft_strlen(src);
-	i = 0;
-	if (size != 0)
+	srcsize = ft_strlen(src);
+	p = 0;
+	if (!dst || !src)
+		return (0);
+	if (dstsize != 0)
 	{
-		while (src[i] && i < size - 1)
+		while (src[p] != '\0' && p < (dstsize - 1))
 		{
-			dst[i] = src[i];
-			i++;
+			dst[p] = src[p];
+			p++;
 		}
-		dst[i] = '\0';
+		dst[p] = '\0';
 	}
-	return (x);
+	return (srcsize);
 }

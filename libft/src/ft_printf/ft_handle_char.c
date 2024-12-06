@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_handle_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 11:22:10 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/30 13:26:55 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:35:46 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:35:46 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../inc/ft_printf.h"
 
-int	ft_putchar_pf(char c)
+int	ft_handle_char(va_list ap)
 {
-	write (1, &c, 1);
-	return (1);
+	char	c;
+
+	c = va_arg(ap, int);
+	return (write(1, &c, 1));
 }

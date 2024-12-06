@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_handle_pointer.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 11:22:17 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/30 12:42:11 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:35:56 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:35:56 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../inc/ft_printf.h"
 
-int	ft_putstr_fd_pf(char *s, int fd)
+int	ft_handle_pointer(va_list ap)
 {
-	int	i;
+	void	*n;
 
-	i = 0;
-	if (!s)
-		return (ft_putstr_fd_pf("(null)", 1));
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
-	return (i);
+	n = va_arg(ap, void *);
+	write(1, "0x", 2);
+	return (ft_putnbr_base((unsigned long long)n, "0123456789abcdef") + 2);
 }
-
-/*
-int main()
-{
-	char str[] = "HELLO";
-	ft_putstr_fd(str, 1);
-}
-*/

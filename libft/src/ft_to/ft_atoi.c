@@ -5,55 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:49:09 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/07 17:04:56 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:37:01 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:37:01 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
-static int	ft_sign(int num, int min_count, int max_count)
+int	ft_atoi(const char *s)
 {
-	if (min_count == 1)
-		num = -num;
-	if ((min_count > 0 && max_count > 0) || min_count > 1 || max_count > 1)
-		num = 0;
-	return (num);
-}
+	int			result;
+	int			sign;
 
-int	ft_atoi(const char *str)
-{
-	int	i;
-	int	min_count;
-	int	max_count;
-	int	num;
-
-	i = 0;
-	min_count = 0;
-	max_count = 0;
-	num = 0;
-	while ((str[i] == ' ' || (str[i] >= 9 && str[i] <= 13)) && str[i])
-		i++;
-	while ((str[i] == '+' || str[i] == '-') && str[i])
+	result = 0;
+	sign = 1;
+	while (*s == ' ' || *s == '\t' || *s == '\n' || \
+			*s == '\r' || *s == '\f' || *s == '\v')
+		s++;
+	if (*s == '-' || *s == '+')
 	{
-		if (str[i] == '-')
-			min_count++;
-		if (str[i] == '+')
-			max_count++;
-		i++;
+		if (*s == '-')
+			sign = -1;
+		s++;
 	}
-	while ((str[i] >= '0' && str[i] <= '9') && str[i])
-		num = (num * 10) + (str[i++] - 48);
-	num = ft_sign(num, min_count, max_count);
-	return (num);
+	while (ft_isdigit(*s))
+		result = result * 10 + (*s++ - '0');
+	return (result * sign);
 }
-/*
-int main()
-{
-	char str[] = "-27372833";
-	int res = ft_atoi(str);
-
-	printf("Mon atoi : %d\n", res);
-	printf("Atoi fonction : %d\n", atoi(str));
-}
-*/

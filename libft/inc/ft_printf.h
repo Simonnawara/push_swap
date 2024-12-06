@@ -5,27 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 11:25:49 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/15 11:25:49 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:34:26 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:34:26 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <unistd.h>
+# include <stdio.h>
 
 int		ft_printf(const char *format, ...);
-int		ft_putstr_fd_pf(char *s, int fd);
-int		ft_putnbr_fd_pf(int n, int fd);
-int		ft_putchar_pf(char c);
-int		ft_print_hex(unsigned int n);
-int		ft_printcaps_hex(unsigned int n);
-int		ft_unsigned(int c);
-int		ft_putunsigned(unsigned int n);
-int		ft_pointer(void *ptr);
-int		ft_hexptr(unsigned long long n);
+int		ft_handle_char(va_list ap);
+int		ft_handle_string(va_list ap);
+int		ft_handle_int(va_list ap);
+int		ft_handle_unsigned(va_list ap);
+int		ft_handle_pointer(va_list ap);
+int		ft_handle_hexlower(va_list ap);
+int		ft_handle_hexupper(va_list ap);
+int		ft_handle_percent(void);
+int		ft_putchar(char c);
+int		ft_putnbr_base(unsigned long long nb, const char *base);
 
 #endif

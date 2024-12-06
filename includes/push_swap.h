@@ -5,79 +5,75 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 14:55:43 by sinawara          #+#    #+#             */
-/*   Updated: 2024/11/12 09:57:51 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/15 09:50:55 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/15 10:00:11 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef PUSH_SWAP_H
-#define PUSH_SWAP_H
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 
-# include "../libft/include/libft.h"
-# include "../libft/include/ft_printf.h"
-# include "../libft/include/get_next_line.h"
-
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stddef.h>
+# include <stdbool.h>
 # include <limits.h>
+# include "../libft/inc/libft.h"
+# include "../libft/inc/ft_printf.h"
 
-typedef struct s_stack
+typedef struct s_stack_node
 {
-	int	value;
-	int index;
-	struct s_stack *next;
-} t_stack;
+	int					nbr;
+	int					index;
+	int					push_cost;
+	bool				above_median;
+	bool				cheapest;
+	struct s_stack_node	*target_node;
+	struct s_stack_node	*next;
+	struct s_stack_node	*prev;
+}	t_stack_node;
 
-// push //
-void	push(t_stack **src, t_stack **dest);
-void	pa(t_stack **stack_a, t_stack **stack_b);
-void	pb(t_stack **stack_b, t_stack **stack_a);
+// Handle errors //
+int				error_syntax(char *str_n);
+int				error_duplicate(t_stack_node *a, int n);
+void			free_stack(t_stack_node **stack);
+void			free_errors(t_stack_node **a);
 
-// swap //
-void	swap(t_stack *stack);
-void	sa(t_stack **stack_a);
-void	sb(t_stack **stack_b);
-void	ss(t_stack **stack_a, t_stack **stack_b);
+// Stack initiation //
+void			define_stack_a(t_stack_node **a, char **argv);
+char			**split(char *s, char c);
 
-// normal rotate //
-void	rotate(t_stack **stack);
-void	ra(t_stack **stack_a);
-void	rb(t_stack **stack_b);
-void	rr(t_stack **stack_a, t_stack **stack_b);
+// Nodes initiation //
+void			define_nodes_a(t_stack_node *a, t_stack_node *b);
+void			define_nodes_b(t_stack_node *a, t_stack_node *b);
+void			current_index(t_stack_node *stack);
+void			set_cheapest(t_stack_node *stack);
+t_stack_node	*get_cheapest(t_stack_node *stack);
+void			rotate_stack(t_stack_node **s, t_stack_node *n, char c);
 
-// reverse rotate //
-void	reverse_rotate(t_stack **stack);
-void	rra(t_stack **stack_a);
-void	rrb(t_stack **stack_b);
-void	rrr(t_stack **stack_a, t_stack **stack_b);
+// Stack utils //
+int				get_stack_size(t_stack_node *stack);
+t_stack_node	*get_last_node(t_stack_node *stack);
+bool			is_stack_sorted(t_stack_node *stack);
+t_stack_node	*min_lst(t_stack_node *stack);
+t_stack_node	*max_lst(t_stack_node *stack);
 
+// Commands //
+void			sa(t_stack_node **a, bool print);
+void			sb(t_stack_node **b, bool print);
+void			ss(t_stack_node **a, t_stack_node **b, bool print);
+void			ra(t_stack_node **a, bool print);
+void			rb(t_stack_node **b, bool print);
+void			rr(t_stack_node **a, t_stack_node **b, bool print);
+void			rra(t_stack_node **a, bool print);
+void			rrb(t_stack_node **b, bool print);
+void			rrr(t_stack_node **a, t_stack_node **b, bool print);
+void			pa(t_stack_node **a, t_stack_node **b, bool print);
+void			pb(t_stack_node **b, t_stack_node **a, bool print);
 
-// get_rot_data //
-int find_index_up(int value, t_stack *stack_a);
-int	find_index_down(int value, t_stack *stack_b);
-int get_rot_type(int index, t_stack *stack_b);
-int min_rot_amount(t_stack *stack_a, t_stack *stack_b, int *rotation_type);
-int min_rot_amount_a(int index, t_stack *stack_a, int *rotation_type);
+// Algorithm //
+void			sort_three(t_stack_node **a);
+void			sort_stacks(t_stack_node **a, t_stack_node **b);
+void			rotate_both(t_stack_node **a, t_stack_node **b,
+					t_stack_node *cheapest_node);
+void			rev_rotate_both(t_stack_node **a, t_stack_node **b,
+					t_stack_node *cheapest_node);
 
-// pvalue_utils //
-int	min_lst(t_stack *stack_b);
-int	max_lst(t_stack *stack_b);
-int get_stack_size(t_stack *stack);
-int get_last_node_index(t_stack *stack);
-int get_last_node_value(t_stack *stack);
-t_stack *get_last_node(t_stack *stack);
-int get_node_index(int value, t_stack *stack);
-int find_next_greater_than(int value, t_stack *stack);
-
-// pvalue //
-int get_rot_a(t_stack **stack_a, t_stack **stack_b);
-
-// first_steps //
-int check_and_push(t_stack **stack_a);
-
-// main //
-void print_list(t_stack *head);
-int parse_arguments(t_stack **stack, char **args);
 #endif

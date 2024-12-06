@@ -5,50 +5,79 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/02 12:06:45 by sinawara          #+#    #+#              #
-#    Updated: 2024/11/12 10:07:10 by sinawara         ###   ########.fr        #
+#    Created: 2024/11/12 19:34:08 by sinawara          #+#    #+#              #
+#    Updated: 2024/11/12 19:34:08 by sinawara         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap
-SRCS =	main.c push.c swap.c \
-		rotate.c reverse.c get_rot_data.c \
-		pvalue_utils.c pvalue.c first_steps.c\
+NAME				= push_swap
 
-CC = gcc
-CCFLAG = -Wall -Werror -Wextra
-LIB = -C ./libft/
+# Directories
+LIBFT				= ./libft/libft.a
+INC					= inc/
+SRC_DIR				= srcs/
+OBJ_DIR				= obj/
 
-SUCCESS_COLOR = \033[32m
+CC					= gcc
+CFLAGS				= -Wall -Werror -Wextra -I
+RM					= rm -f
 
-OBJ_DIR = obj
-OBJECT = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
-D_SRCS = ./src/
 
-all : $(NAME)
+# Source Files
+OPERATIONS_DIR		=	$(SRC_DIR)operations/push.c \
+						$(SRC_DIR)operations/swap.c \
+						$(SRC_DIR)operations/rotate.c \
+						$(SRC_DIR)operations/rev_rotate.c \
+						$(SRC_DIR)operations/sort_three.c \
+						$(SRC_DIR)operations/sort_stacks.c \
 
-$(OBJ_DIR)/%.o: $(D_SRCS)%.c | $(OBJ_DIR)
-	@$(CC) $(CCFLAG) -I./libft -I/includes -o $@ -c $<
+PVALUE_DIR		=		$(SRC_DIR)pvalue/main.c \
+						$(SRC_DIR)pvalue/split.c \
+						$(SRC_DIR)pvalue/pvalue_a_to_b.c \
+						$(SRC_DIR)pvalue/pvalue_b_to_a.c \
+						$(SRC_DIR)pvalue/define_stack.c \
+						$(SRC_DIR)pvalue/stack_utils.c \
+						$(SRC_DIR)pvalue/errors.c \
 
-# Create obj directory if it doesn't exist
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+SRCS 				=	$(OPERATIONS_DIR) $(PVALUE_DIR)
 
-$(NAME) : $(OBJECT)
-	@make $(LIB)
-	@$(CC) $(CCFLAG) -o $(NAME) $(OBJECT) -L./libft -lft
-	@echo "$(SUCCESS_COLOR)$(NAME) - Compiled with Success"
+OBJ 				= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 
-clean :
-	@make clean $(LIB)
-	@echo "$(SUCCESS_COLOR)$(NAME) - Cleaned with Success"
-	@/bin/rm -rf $(OBJ_DIR)
+# Build
+start:
+					@make all
 
-fclean : clean
-	@make fclean $(LIB)
-	@rm -rf ./$(NAME)
-	@echo "$(SUCCESS_COLOR)$(NAME) - FCleaned with Success"
+$(LIBFT):
+					@make -C ./libft
 
-re : fclean all
+all: 				logo $(NAME)
 
-.PHONY: all clean fclean re
+logo:
+	@printf "\033[1;35m      :::::::::  :::    :::  ::::::::  :::    :::            ::::::::  :::       :::     :::     ::::::::: \n"
+	@printf "\033[1;35m     :+:    :+: :+:    :+: :+:    :+: :+:    :+:           :+:    :+: :+:       :+:   :+: :+:   :+:    :+: \n"
+	@printf "\033[1;35m    +:+    +:+ +:+    +:+ +:+        +:+    +:+           +:+        +:+       +:+  +:+   +:+  +:+    +:+  \n"
+	@printf "\033[1;35m   +#++:++#+  +#+    +:+ +#++:++#++ +#++:++#++           +#++:++#++ +#+  +:+  +#+ +#++:++#++: +#++:++#+    \n"
+	@printf "\033[1;35m  +#+        +#+    +#+        +#+ +#+    +#+                  +#+ +#+ +#+#+ +#+ +#+     +#+ +#+           \n"
+	@printf "\033[1;35m #+#        #+#    #+# #+#    #+# #+#    #+#           #+#    #+#  #+#+# #+#+#  #+#     #+# #+#            \n"
+	@printf "\033[1;35m###         ########   ########  ###    ### ##########  ########   ###   ###   ###     ### ###             \n"
+	@printf "\033[1;35m\t\t\t\t\t\t\t\t\t\t\t\tmade by me\n\n"
+
+
+$(NAME): 			$(OBJ) $(LIBFT)
+					@$(CC) $(CFLAGS) $(INC) $(OBJ) $(LIBFT) -o $(NAME)
+
+$(OBJ_DIR)%.o:		$(SRC_DIR)%.c
+					@mkdir -p $(@D)
+					@$(CC) $(CFLAGS) $(INC) -c $< -o $@
+
+clean:
+					@$(RM) -r $(OBJ_DIR)
+					@make clean -C ./libft
+
+fclean: 			clean
+					@$(RM) $(NAME)
+					@$(RM) $(LIBFT)
+
+re: 				fclean all
+
+.PHONY: 			start all clean fclean re logo

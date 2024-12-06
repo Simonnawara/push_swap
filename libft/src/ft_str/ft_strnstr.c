@@ -5,36 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:56:28 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/07 15:56:29 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:48 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/15 09:52:35 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t n)
 {
-	size_t	i;
-	size_t	j;
+	size_t	little_len;
 
-	if (!big && !little)
-		return (NULL);
-	if (little[0] == '\0')
+	little_len = ft_strlen(little);
+	if (little_len == 0)
 		return ((char *)big);
-	i = 0;
-	while (i < len && big[i])
+	while (*big != '\0' && n-- >= little_len)
 	{
-		j = 0;
-		while (big[i + j] && little[j] && (i + j) < len)
-		{
-			if (big[i + j] == little[j])
-				j++;
-			else
-				break ;
-		}
-		if (little[j] == '\0')
-			return ((char *)&big[i]);
-		i++;
+		if (*big == *little && ft_strncmp(big, little, little_len) == 0)
+			return ((char *)big);
+		big++;
 	}
 	return (NULL);
 }

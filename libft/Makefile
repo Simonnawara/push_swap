@@ -1,124 +1,114 @@
-NAME		=	libft.a
-INCLUDES	=	include/
-SRC_DIR 	=	src/
-OBJ_DIR		=	obj/
-CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -I
-RM			=	rm -f
-AR			=	ar rcs
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/11/12 19:37:18 by sinawara          #+#    #+#              #
+#    Updated: 2024/11/12 19:37:18 by sinawara         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-#Colors
+# Standard
+NAME			= libft.a
 
-DEF_COLOR = \033[0;39m
-GRAY = \033[0;90m
-RED = \033[0;91m
-GREEN = \033[0;92m
-YELLOW = \033[0;93m
-BLUE = \033[0;94m
-MAGENTA = \033[0;95m
-CYAN = \033[0;96m
-WHITE = \033[0;97m
+# Directories
+INC				= inc/
+SRC_DIR			= src/
+OBJ_DIR			= obj/
 
-FDF_LOGO='\n\n \
-\033[0;33m(     (          (              \n \
- \033[0;31m)\\ )  )\\ )   (   )\\ )   *   )\n \
- \033[0;33m(()/( (()/( ( )\ (()/(  )  /( \n \
- \033[0;31m(_)) /(_)))((_) /(_)) ( )(_)) \n \
- \033[0;33m(_))  (_)) ((_)_ (_))_|(_(_())\n \
- \033[0;33m| |   |_ _| | _ )| |_ |_   _|\n \
- \033[0;33m| |__  | |  | _ \| __|   | | \n \
- \033[0;31m|____||___| |___/|_|    |_| \n \
-\t\t \033[0;34m  \made by me \n\n'
+# Compielr and Flags
+CC				= gcc
+CFLAGS			= -Wall -Wextra -Werror -I
+RM				= rm -f
+AR				= ar rcs
 
-####################
-###   SOURCES    ###
-####################
+# Source Files
+FTIS_DIR		=	$(SRC_DIR)ft_is/ft_isalnum.c \
+					$(SRC_DIR)ft_is/ft_isalpha.c \
+					$(SRC_DIR)ft_is/ft_isascii.c \
+					$(SRC_DIR)ft_is/ft_isdigit.c \
+					$(SRC_DIR)ft_is/ft_isprint.c
 
-FTIS_DIR	=	ft_is/
-FTIS		=	ft_isalnum ft_isalpha ft_isascii ft_isdigit ft_isprint
+FTMEM_DIR		=	$(SRC_DIR)ft_mem/ft_bzero.c \
+					$(SRC_DIR)ft_mem/ft_calloc.c \
+					$(SRC_DIR)ft_mem/ft_memchr.c \
+					$(SRC_DIR)ft_mem/ft_memcmp.c \
+					$(SRC_DIR)ft_mem/ft_memmove.c \
+					$(SRC_DIR)ft_mem/ft_memset.c
 
-FTMEM_DIR	=	ft_mem/
-FTMEM		=	ft_bzero ft_calloc ft_memchr ft_memcmp ft_memmove ft_memset
+FTPUT_DIR		=	$(SRC_DIR)ft_put/ft_putchar_fd.c \
+					$(SRC_DIR)ft_put/ft_putendl_fd.c \
+					$(SRC_DIR)ft_put/ft_putnbr_fd.c \
+					$(SRC_DIR)ft_put/ft_putstr_fd.c
 
-FTPUT_DIR	=	ft_put/
-FTPUT		=	ft_putchar_fd ft_putendl_fd ft_putnbr_fd ft_putstr_fd
+FTTO_DIR		=	$(SRC_DIR)ft_to/ft_atoi.c \
+					$(SRC_DIR)ft_to/ft_itoa.c \
+					$(SRC_DIR)ft_to/ft_tolower.c \
+					$(SRC_DIR)ft_to/ft_toupper.c
 
-FTTO_DIR	=	ft_to/
-FTTO		=	ft_atoi ft_itoa ft_tolower ft_toupper
+FTSTR_DIR		=	$(SRC_DIR)ft_str/ft_split.c \
+					$(SRC_DIR)ft_str/ft_strchr.c \
+					$(SRC_DIR)ft_str/ft_strdup.c \
+					$(SRC_DIR)ft_str/ft_striteri.c \
+					$(SRC_DIR)ft_str/ft_strjoin.c \
+					$(SRC_DIR)ft_str/ft_strlcat.c \
+					$(SRC_DIR)ft_str/ft_strlcpy.c \
+					$(SRC_DIR)ft_str/ft_strlen.c \
+					$(SRC_DIR)ft_str/ft_strmapi.c \
+					$(SRC_DIR)ft_str/ft_strncmp.c \
+					$(SRC_DIR)ft_str/ft_strncpy.c \
+					$(SRC_DIR)ft_str/ft_strnstr.c \
+					$(SRC_DIR)ft_str/ft_strrchr.c \
+					$(SRC_DIR)ft_str/ft_strtrim.c \
+					$(SRC_DIR)ft_str/ft_substr.c
 
-FTSTR_DIR	=	ft_str/
-FTSTR		=	ft_split ft_strchr ft_strdup ft_striteri ft_strjoin \
-				ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp \
-				ft_strnstr ft_strrchr ft_strtrim ft_substr
+FTLST_DIR		=	$(SRC_DIR)ft_lst/ft_lstadd_back.c \
+					$(SRC_DIR)ft_lst/ft_lstadd_front.c \
+					$(SRC_DIR)ft_lst/ft_lstclear.c \
+					$(SRC_DIR)ft_lst/ft_lstdelone.c \
+					$(SRC_DIR)ft_lst/ft_lstiter.c \
+					$(SRC_DIR)ft_lst/ft_lstlast.c \
+					$(SRC_DIR)ft_lst/ft_lstmap.c \
+					$(SRC_DIR)ft_lst/ft_lstnew.c \
+					$(SRC_DIR)ft_lst/ft_lstsize.c
 
-FTLST_DIR	=	ft_lst/
-FTLST		=	ft_lstadd_back ft_lstadd_front ft_lstclear ft_lstdelone \
-				ft_lstiter ft_lstlast ft_lstmap ft_lstnew ft_lstsize
+FTPRINTF_DIR	=	$(SRC_DIR)ft_printf/ft_printf.c \
+					$(SRC_DIR)ft_printf/ft_handle_char.c \
+					$(SRC_DIR)ft_printf/ft_handle_string.c \
+					$(SRC_DIR)ft_printf/ft_handle_int.c \
+					$(SRC_DIR)ft_printf/ft_handle_unsigned.c \
+					$(SRC_DIR)ft_printf/ft_handle_pointer.c	\
+					$(SRC_DIR)ft_printf/ft_handle_hex.c \
+					$(SRC_DIR)ft_printf/ft_handle_percent.c \
+					$(SRC_DIR)ft_printf/ft_printf_utils.c
 
-FTPRINTF_DIR	=	ft_printf/
-FTPRINTF		=	ft_printf ft_putchar ft_putnbr_fd ft_putstr_fd \
-					ft_print_hex ft_printcaps_hex ft_unsigned \
-					ft_putunsigned ft_pointer ft_hexptr
+GNL_DIR			=	$(SRC_DIR)get_next_line/get_next_line.c
 
-GET_NEXT_LINE_DIR	=	get_next_line/
-GET_NEXT_LINE		=	get_next_line get_next_line_utils
+# Concatenate all source files
+SRC 			= $(FTIS_DIR) $(FTMEM_DIR) $(FTPUT_DIR) $(FTTO_DIR) $(FTTO_DIR) $(FTSTR_DIR) $(FTLST_DIR) $(FTPRINTF_DIR) $(GNL_DIR)
 
-SRC_FILES+=$(addprefix $(FTIS_DIR),$(FTIS))
-SRC_FILES+=$(addprefix $(FTMEM_DIR),$(FTMEM))
-SRC_FILES+=$(addprefix $(FTPUT_DIR),$(FTPUT))
-SRC_FILES+=$(addprefix $(FTTO_DIR),$(FTTO))
-SRC_FILES+=$(addprefix $(FTSTR_DIR),$(FTSTR))
-SRC_FILES+=$(addprefix $(FTPRINTF_DIR),$(FTPRINTF))
-SRC_FILES+=$(addprefix $(GET_NEXT_LINE_DIR),$(GET_NEXT_LINE))
-BONUS_FILES+=$(addprefix $(FTLST_DIR),$(FTLST))
+# Apply the pattern substitution to each source file in SRC and produce a corresponding list of object files in the OBJ_DIR
+OBJ 			= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 
-SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
-OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
-BONUS_OBJ	= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(BONUS_FILES)))
+# Build rules
+all: 			$(NAME)
 
-###
+$(NAME): 		$(OBJ)
+				@$(AR) $(NAME) $(OBJ)
 
-OBJF		=	.cache_exists
-
-all: logo $(NAME)
-
-logo:
-			@printf $(FDF_LOGO)
-
-$(NAME):	$(OBJ)
-			@$(AR) $(NAME) $(OBJ)
-			@echo "$(GREEN)Libft compiled!$(DEF_COLOR)"
-
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJF)
-			@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(OBJF):
-			@mkdir -p $(OBJ_DIR)
-			@mkdir -p $(OBJ_DIR)$(FTIS_DIR)
-			@mkdir -p $(OBJ_DIR)$(FTMEM_DIR)
-			@mkdir -p $(OBJ_DIR)$(FTPUT_DIR)
-			@mkdir -p $(OBJ_DIR)$(FTTO_DIR)
-			@mkdir -p $(OBJ_DIR)$(FTSTR_DIR)
-			@mkdir -p $(OBJ_DIR)$(FTLST_DIR)
-			@mkdir -p $(OBJ_DIR)$(FTPRINTF_DIR)
-			@mkdir -p $(OBJ_DIR)$(GET_NEXT_LINE_DIR)
-
-
-bonus:		$(BONUS_OBJ)
-			@$(AR) $(NAME) $(BONUS_OBJ)
-			@echo "$(GREEN)Libft bonus compiled!$(DEF_COLOR)"
+$(OBJ_DIR)%.o:	$(SRC_DIR)%.c
+				@mkdir -p $(@D)
+				@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
-			@$(RM) -rf $(OBJ_DIR)
-			@$(RM) -f $(OBJF)
-			@echo "$(BLUE)Libft objects files cleaned!$(DEF_COLOR)"
+				@$(RM) -r $(OBJ_DIR)
+				@$(RM) .cache_exists
 
-fclean:		clean
-			@$(RM) -f $(NAME)
-			@echo "$(CYAN)Libft executable files cleaned!$(DEF_COLOR)"
+fclean: 		clean
+				@$(RM) $(NAME)
 
-re:			fclean all
-			@echo "$(GREEN)Cleaned and rebuilt everything for libft!$(DEF_COLOR)"
+re: 			fclean all
 
-.PHONY:		all clean fclean re
+.PHONY: 		all clean fclean re

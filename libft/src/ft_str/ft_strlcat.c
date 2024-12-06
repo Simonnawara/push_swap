@@ -5,35 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:55:37 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/07 15:55:38 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:34 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:36:34 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t buffsize)
 {
+	size_t	dstlen;
 	size_t	srclen;
-	size_t	destlen;
-	size_t	i;
 
-	if (!dest && !src)
-		return (0);
-	destlen = 0;
-	while (dest[destlen])
-		destlen++;
-	srclen = 0;
-	while (src[srclen])
-		srclen++;
-	if (size < destlen)
-		return (srclen + size);
-	i = 0;
-	while (src[i] && i < (size - destlen - 1) && (size - destlen) >= 1)
-	{
-		dest[destlen + i] = src[i];
-		i++;
-	}
-	dest[destlen + i] = '\0';
-	return (srclen + destlen);
+	dstlen = ft_strlen(dst);
+	srclen = ft_strlen(src);
+	if (dstlen < buffsize - 1 && buffsize > 0)
+		ft_strlcpy(&dst[dstlen], src, buffsize - dstlen);
+	if (dstlen >= buffsize)
+		dstlen = buffsize;
+	return (dstlen + srclen);
 }

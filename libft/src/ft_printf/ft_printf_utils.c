@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pointer.c                                       :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 22:15:29 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/28 13:36:59 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:03 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:36:03 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../inc/ft_printf.h"
+#include "../../inc/libft.h"
 
-int	ft_pointer(void *ptr)
+int	ft_putnbr_base(unsigned long long nb, const char *base)
 {
-	unsigned long long	address;
+	unsigned long long	len;
 	int					count;
 
 	count = 0;
-	address = (unsigned long long)ptr;
-	write(1, "0x", 2);
-	count += 2;
-	if (address == 0)
-		count += write(1, "0", 1);
-	else
-		count += ft_hexptr(address);
+	len = ft_strlen(base);
+	if (nb >= len)
+		count += ft_putnbr_base(nb / len, base);
+	count += ft_putchar(base[nb % len]);
 	return (count);
+}
+
+int	ft_putchar(char c)
+{
+	return (write(1, &c, 1));
 }

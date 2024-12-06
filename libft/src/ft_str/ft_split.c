@@ -5,101 +5,104 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:54:16 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/07 15:54:18 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:21 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:36:21 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
-static int	count_words(char const *str, char charset)
+static int	count_words(const char *s, char c)
 {
-	int	i;
 	int	words;
+	int	flag;
 
 	words = 0;
-	i = 0;
-	while (str[i])
+	flag = 0;
+	while (*s)
 	{
-		if ((str[i] != charset)
-			&& (str[i + 1] == charset || str[i + 1] == '\0'))
+		if (*s != c && flag == 0)
+		{
+			flag = 1;
 			words++;
-		i++;
+		}
+		else if (*s == c)
+			flag = 0;
+		s++;
 	}
 	return (words);
 }
 
-static char	**ft_free(char **res)
+static char	*word_dup(const char *s, int start, int end)
 {
-	size_t	i;
+	char	*word;
+	int		i;
 
 	i = 0;
-	while (res[i])
+	word = malloc((end - start + 1) * sizeof(char));
+	if (!word)
 	{
-		free(res[i]);
-		i++;
+		return (NULL);
 	}
-	free(res);
+	while (start < end)
+	{
+		word[i++] = s[start++];
+	}
+	word[i] = '\0';
+	return (word);
+}
+
+static char	**free_array(char **arr, size_t k)
+{
+	while (k-- > 0)
+	{
+		free(arr[k]);
+		arr[k] = NULL;
+	}
+	free(arr);
+	arr = NULL;
 	return (NULL);
 }
 
-static char	*get_word(char const *s, char c)
+static char	**result_array(size_t size, char **res_arr, char const *s, char c)
 {
 	size_t	i;
-	char	*res;
+	size_t	start;
+	size_t	end;
 
 	i = 0;
-	while (s[i] != c && s[i])
+	start = 0;
+	end = 0;
+	while (i < size)
+	{
+		while (s[start] == c)
+			start++;
+		end = start;
+		while (s[end] && s[end] != c)
+			end++;
+		res_arr[i] = word_dup(s, start, end);
+		if (!res_arr[i])
+			return (free_array(res_arr, i));
+		start = end;
 		i++;
-	res = malloc(sizeof(char) * (i + 1));
-	if (!res)
-		return (NULL);
-	ft_strlcpy(res, s, (i + 1));
-	return (res);
+	}
+	res_arr[i] = NULL;
+	return (res_arr);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	i;
-	int		j;
-	char	**tab;
+	char		**result;
+	size_t		size;
 
-	i = 0;
-	j = 0;
+	size = count_words(s, c);
 	if (!s)
 		return (NULL);
-	tab = malloc(sizeof(char *) * (count_words(s, c) + 1));
-	if (!tab)
-		return (NULL);
-	while (s[i] && j < count_words(s, c))
-	{
-		while (s[i] == c && s[i])
-			i++;
-		tab[j] = get_word(s + i, c);
-		if (!tab[j])
-			return (ft_free(tab));
-		i += ft_strlen(tab[j]);
-		j++;
-	}
-	tab[j] = NULL;
-	return (tab);
-}
-/*
-int	main(void)
-{
-	char **result;
-	int i;
-
-	result = ft_split("hello! 1234", ' ');
+	result = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!result)
-		return (1);
-	i = 0;
-	while (result[i])
-	{
-		printf("Word %d: %s\n", i + 1, result[i]);
-		i++;
-	}
-	ft_free(result);
-	return (0);
+		return (NULL);
+	result = result_array(size, result, s, c);
+	if (!result)
+		return (NULL);
+	return (result);
 }
-*/

@@ -5,30 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:55:09 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/07 15:55:16 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:27 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:36:27 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup(const char *s)
 {
-	int		i;
-	char	*res;
+	size_t	len;
+	char	*dst;
 
-	i = 0;
-	while (src[i])
-		i++;
-	res = malloc(sizeof(char) * i + 1);
-	if (!res)
+	len = ft_strlen(s) + 1;
+	dst = (char *)malloc(len * sizeof(char));
+	if (!dst)
 		return (NULL);
-	i = 0;
-	while (src[i])
-	{
-		res[i] = src[i];
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
+	ft_memcpy(dst, s, len);
+	return (dst);
 }

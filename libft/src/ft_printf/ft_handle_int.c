@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_hex.c                                     :+:      :+:    :+:   */
+/*   ft_handle_int.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 12:24:05 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/15 12:24:05 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:35:51 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:35:51 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../inc/ft_printf.h"
 
-int	ft_print_hex(unsigned int n)
+int	ft_handle_int(va_list ap)
 {
-	int		len;
-	char	c;
+	long long	n;
+	int			neg;
 
-	len = 0;
-	if (n >= 16)
-		len += ft_print_hex(n / 16);
-	n = n % 16;
-	if (n < 10)
-		c = n + '0';
-	else
-		c = n + 'a' - 10;
-	write(1, &c, 1);
-	len++;
-	return (len);
+	n = va_arg(ap, int);
+	neg = 0;
+	if (n < 0)
+	{
+		n *= -1;
+		neg++;
+		write(1, "-", 1);
+	}
+	return (ft_putnbr_base(n, "0123456789") + neg);
 }

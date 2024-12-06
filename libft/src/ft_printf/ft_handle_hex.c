@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putunsigned.c                                   :+:      :+:    :+:   */
+/*   ft_handle_hex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 11:22:32 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/24 14:13:16 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:35:49 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:35:49 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../inc/ft_printf.h"
 
-int	ft_putunsigned(unsigned int n)
+int	ft_handle_hexlower(va_list ap)
 {
-	char	nb_char;
-	int		len;
+	unsigned int	n;
 
-	len = 0;
-	nb_char = n + 48;
-	if (n > 9)
-	{
-		len += ft_putunsigned((n / 10));
-		len += ft_putunsigned((n % 10));
-	}
-	else
-	{
-		write (1, &nb_char, 1);
-		len++;
-	}
-	return (len);
+	n = va_arg(ap, unsigned int);
+	return (ft_putnbr_base(n, "0123456789abcdef"));
+}
+
+int	ft_handle_hexupper(va_list ap)
+{
+	unsigned int	n;
+
+	n = va_arg(ap, unsigned int);
+	return (ft_putnbr_base(n, "0123456789ABCDEF"));
 }

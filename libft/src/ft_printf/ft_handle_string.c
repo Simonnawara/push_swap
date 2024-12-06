@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printcaps_hex.c                                 :+:      :+:    :+:   */
+/*   ft_handle_string.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 11:22:02 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/15 11:22:02 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:35:59 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:35:59 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../inc/ft_printf.h"
 
-int	ft_printcaps_hex(unsigned int n)
+int	ft_handle_string(va_list ap)
 {
-	int		len;
-	char	c;
+	char	*s;
+	int		i;
 
-	len = 0;
-	if (n >= 16)
-		len += ft_printcaps_hex(n / 16);
-	n = n % 16;
-	if (n < 10)
-		c = n + '0';
-	else
-		c = n + 'a' - 10;
-	if (c >= 'a' && c <= 'f')
-		c -= 32;
-	write(1, &c, 1);
-	len++;
-	return (len);
+	s = va_arg(ap, char *);
+	if (!s)
+		return (write(1, "(null)", 6));
+	i = 0;
+	while (s[i])
+		write(1, &s[i++], 1);
+	return (i);
 }

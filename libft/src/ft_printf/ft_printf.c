@@ -5,72 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 11:22:07 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/30 13:35:30 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:06 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:36:06 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../inc/ft_printf.h"
 
-static int	ft_find_format(char format, va_list args)
+static int	ft_specifier(char c, va_list ap)
 {
-	int	count;
-
-	count = 0;
-	if (format == 'd' || format == 'i')
-		count += ft_putnbr_fd_pf(va_arg(args, int), 1);
-	else if (format == 'c')
-		count += ft_putchar_pf(va_arg(args, int));
-	else if (format == 'x')
-		count += ft_print_hex(va_arg(args, int));
-	else if (format == 'X')
-		count += ft_printcaps_hex(va_arg(args, int));
-	else if (format == 's')
-		count += ft_putstr_fd_pf(va_arg(args, char *), 1);
-	else if (format == 'u')
-		count += ft_unsigned(va_arg(args, int));
-	else if (format == 'p')
-		count += ft_pointer(va_arg(args, void *));
-	else if (format == '%')
-		return (write (1, "%%", 1));
-	else
-		return (0);
-	return (count);
+	if (c == 'c')
+		return (ft_handle_char(ap));
+	if (c == 's')
+		return (ft_handle_string(ap));
+	if (c == 'i' || c == 'd')
+		return (ft_handle_int(ap));
+	if (c == 'u')
+		return (ft_handle_unsigned(ap));
+	if (c == 'p')
+		return (ft_handle_pointer(ap));
+	if (c == 'x')
+		return (ft_handle_hexlower(ap));
+	if (c == 'X')
+		return (ft_handle_hexupper(ap));
+	else if (c == '%')
+		return (ft_handle_percent());
+	return (write(1, &c, 1));
 }
 
 int	ft_printf(const char *format, ...)
 {
-	va_list	args;
+	va_list	ap;
 	int		count;
-	int		j;
 
+	if (!format)
+		return (0);
+	va_start(ap, format);
 	count = 0;
-	j = 0;
-	va_start(args, format);
-	while (format[j])
+	while (*format)
 	{
-		if (format[j] == '%')
-		{
-			while (format[j + 1] == ' ')
-				j++;
-			count += ft_find_format(format[j + 1], args);
-			j += 2;
-		}
+		if (*format == '%' && !*(format + 1))
+			break ;
+		else if (*format == '%')
+			count += ft_specifier(*(++format), ap);
 		else
-		{
-			write(1, &format[j], 1);
-			count++;
-			j++;
-		}
+			count += write(1, format, 1);
+		format++;
 	}
-	va_end(args);
+	va_end(ap);
 	return (count);
 }
-
-/* #include <stdio.h>
-int main(void)
-{
-	ft_printf("%p\n", 10);
-	printf("%u\n", 10);
-	return 0;
-} */

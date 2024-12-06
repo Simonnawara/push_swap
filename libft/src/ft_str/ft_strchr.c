@@ -5,25 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:54:50 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/07 15:54:51 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:25 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:36:25 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == (unsigned char)c)
-			return ((char *)&s[i]);
-		i++;
-	}
-	if ((unsigned char)c == '\0')
-		return ((char *)&s[i]);
-	return (NULL);
+	while (*s != (char)c)
+		if (!*s++)
+			return (NULL);
+	return ((char *)s);
 }

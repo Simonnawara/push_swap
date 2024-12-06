@@ -5,29 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:55:56 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/07 15:55:57 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:39 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:36:39 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
 size_t	ft_strlen(const char *s)
 {
-	size_t	i;
+	const char	*start;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	start = s;
+	while (*s++)
+		;
+	return (s - start - 1);
 }
-/*
-int	main(void)
-{
-	const char *str1 = "Hello, World!";
-
-	printf("Length of '%s': %zu\n", str1, ft_strlen(str1)); // Should return 13
-
-	return (0);
-}
-*/

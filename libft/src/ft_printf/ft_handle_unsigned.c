@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unsigned.c                                      :+:      :+:    :+:   */
+/*   ft_handle_unsigned.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 21:06:58 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/30 13:41:15 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:36:01 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:36:01 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../../inc/ft_printf.h"
 
-int	ft_unsigned(int c)
+int	ft_handle_unsigned(va_list ap)
 {
-	if (c >= 0)
-		return (ft_putnbr_fd_pf(c, 1));
-	else
-		return (ft_putunsigned((unsigned int) c));
+	unsigned int	n;
+
+	n = va_arg(ap, unsigned int);
+	return (ft_putnbr_base(n, "0123456789"));
 }

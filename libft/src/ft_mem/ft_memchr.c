@@ -5,40 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sinawara <sinawara@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 15:51:38 by sinawara          #+#    #+#             */
-/*   Updated: 2024/10/07 15:51:45 by sinawara         ###   ########.fr       */
+/*   Created: 2024/11/12 19:35:33 by sinawara          #+#    #+#             */
+/*   Updated: 2024/11/12 19:35:33 by sinawara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/libft.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t			i;
-	unsigned char	*chs;
+	const unsigned char	*p;
 
-	chs = (unsigned char *)s;
-	i = 0;
-	while (i < n)
+	p = (const unsigned char *)s;
+	while (n > 0)
 	{
-		if (*chs == (unsigned char)c)
-			return (chs);
-		i++;
-		chs++;
+		if (*p == (unsigned char)c)
+			return ((void *)p);
+		p++;
+		n--;
 	}
 	return (NULL);
 }
-/*
-int main(void)
-{
-    char data[] = { 'a', 'b', 'c', 'd', '\0', 'e', 'f' };
-    char *result = ft_memchr(data, 'e', 7);
-
-    if (result != NULL)
-        printf("Found 'e' at position: 0%ld\n", result - data);
-    else
-        printf("Character not found.\n");
-
-    return 0;
-}
-*/
